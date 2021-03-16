@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1019595472179",
+    "firebase_url": "https://mi-pago-65449.firebaseio.com",
+    "project_id": "mi-pago-65449",
+    "storage_bucket": "mi-pago-65449.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019595472179:android:b87e2da46b663e104a1246",
+        "android_client_info": {
+          "package_name": "com.acherazo.mi_pago"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019595472179-isj5cc0mg2ef865dpmdpj8h7ve358p5k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.acherazo.mi_pago",
+            "certificate_hash": "8227ee632786e0ff8ee2e8ea6060d4802d9ff0ca"
+          }
+        },
+        {
+          "client_id": "1019595472179-gum7dn6sv6cg4k8b15ldcii8l7rneirj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTpN7TNy2L3eD3ETxnHXRjD2FRZ6RdSfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019595472179-gum7dn6sv6cg4k8b15ldcii8l7rneirj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
