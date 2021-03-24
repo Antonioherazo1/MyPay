@@ -6,9 +6,14 @@ class Ingresos extends StatefulWidget {
   _IngresosState createState() => _IngresosState();
 }
 
-//var _categoryList = ['cat1', 'cat2', 'cat3'];
-
 class _IngresosState extends State<Ingresos> {
+  List<String> nameTipoIngresos = [
+    'Extras Dirunas',
+    'Recargos Nocturnos',
+    'Diurnas Festivas',
+    'Extras Dominicales'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,15 +28,30 @@ class _IngresosState extends State<Ingresos> {
           children: [
             Center(
               child: Container(
-                height: 400.0,
-                margin: EdgeInsets.all(10.0),
-                child: ListView.builder(
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return ItemIngresos();
-                    }),
-              ),
+                  height: 400.0,
+                  margin: EdgeInsets.all(10.0),
+                  child: ListView.builder(
+                      itemCount: nameTipoIngresos.length,
+                      itemBuilder: (context, index) {
+                        return ItemIngresos(
+                            title: '${nameTipoIngresos[index]}');
+                      })),
             ),
+            FlatButton(
+              onPressed: () {
+                String NewType = 'NewType' + '${nameTipoIngresos.length + 1}';
+                setState(() {
+                  nameTipoIngresos.add(NewType);
+                });
+              },
+              child: Text(
+                'Nuevo Tipo de Ingreso',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              color: Colors.lightBlueAccent,
+            )
           ],
         ),
       ),

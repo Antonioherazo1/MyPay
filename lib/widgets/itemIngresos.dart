@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ItemIngresos extends StatelessWidget {
-  Data data;
+  String title;
 
-  ItemIngresos({this.data});
+  ItemIngresos({this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ItemIngresos extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "Recargos Nocturnos".toUpperCase(),
+                '$title'.toUpperCase(),
                 style: TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold,
@@ -66,7 +66,9 @@ class ItemIngresos extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20)),
                         filled: true,
                         fillColor: Colors.white,
-                      )),
+                      ),
+                      // onChanged: (){},
+                      ),
                 ),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text("10000", style: TextStyle(fontSize: 50.0))
