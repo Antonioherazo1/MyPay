@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_pago/screens/pantallaInicio.dart';
+import 'package:provider/provider.dart';
+import 'package:mi_pago/models/incomeData.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,8 +11,11 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PantallaInicio(),
+    return ChangeNotifierProvider(
+          create: (context) => IncomeData(),
+          child: MaterialApp(
+        home: PantallaInicio(),
+      ),
     );
   }
 }

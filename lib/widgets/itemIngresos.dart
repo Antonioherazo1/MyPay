@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
-class ItemIngresos extends StatelessWidget {
-  final String title;
-  final double factor;
+class ItemIngresos extends StatefulWidget {
+  String title;
+  double factor;
+  int value;
+  int total = 0;
 
-  ItemIngresos({this.title, this.factor});
+  ItemIngresos({this.title, this.factor, this.value});
 
+  @override
+  _ItemIngresosState createState() => _ItemIngresosState();
+}
+
+class _ItemIngresosState extends State<ItemIngresos> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +35,7 @@ class ItemIngresos extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                '$title'.toUpperCase(),
+                '${widget.title}'.toUpperCase(),
                 style: TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold,
@@ -68,11 +75,16 @@ class ItemIngresos extends StatelessWidget {
                       filled: true,
                       fillColor: Colors.white,
                     ),
-                    // onChanged: (){},
+                    onChanged: (newValue) {
+                      setState(() {
+                        
+                      });
+                    },
                   ),
                 ),
+                Text('${widget.factor}'),
                 Text("=", style: TextStyle(fontSize: 50.0)),
-                Text("10000", style: TextStyle(fontSize: 50.0))
+                Text(widget.total.toString(), style: TextStyle(fontSize: 50.0))
               ],
             ),
           )

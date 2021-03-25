@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/itemIngresos.dart';
 import '../screens/add_IncomeScreen.dart';
-import 'package:mi_pago/models/incomes.dart';
+import 'package:mi_pago/widgets/income_List.dart';
 
 class Ingresos extends StatefulWidget {
   @override
@@ -9,16 +8,7 @@ class Ingresos extends StatefulWidget {
 }
 
 class _IngresosState extends State<Ingresos> {
-  List<Income> nameTipoIngresos = [
-    Income(name: 'Extras Dirunas'),
-    Income(name: 'Recargos Nocturnos'),
-    Income(name: 'Diurnas Festivas'),
-    Income(name: 'Extras Dominicales')
-    // 'Extras Dirunas',
-    // 'Recargos Nocturnos',
-    // 'Diurnas Festivas',
-    // 'Extras Dominicales'
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -32,35 +22,11 @@ class _IngresosState extends State<Ingresos> {
       body: Container(
         child: Column(
           children: [
-            Center(
-              child: Container(
-                  height: 550.0,
-                  margin: EdgeInsets.all(10.0),
-                  child: ListView.builder(
-                      itemCount: nameTipoIngresos.length,
-                      itemBuilder: (context, index) {
-                        return ItemIngresos(
-                            title: nameTipoIngresos[index].name,
-                            factor: nameTipoIngresos[index].factor);
-                      })),
-            ),
+            //-------------List Builder -----------//
+            Income_List(),
+            //-------------List Builder -----------//
             FlatButton(
               color: Colors.lightBlueAccent,
-              onPressed: () {
-                // String NewType = 'NewType' + '${nameTipoIngresos.length + 1}';
-                // setState(() {
-                //   nameTipoIngresos.add(NewType);
-                // });
-                showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => SingleChildScrollView(
-                            child: Container(
-                          padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom),
-                          child: AddIncomeScreen(),
-                        )));
-              },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
@@ -71,6 +37,18 @@ class _IngresosState extends State<Ingresos> {
                   ),
                 ),
               ),
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => SingleChildScrollView(
+                            child: Container(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: AddIncomeScreen(),
+                        )));
+              },
+
             )
           ],
         ),
@@ -78,3 +56,9 @@ class _IngresosState extends State<Ingresos> {
     );
   }
 }
+
+
+                // String NewType = 'NewType' + '${nameTipoIngresos.length + 1}';
+                // setState(() {
+                //   nameTipoIngresos.add(NewType);
+                // });

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mi_pago/models/incomeData.dart';
+import 'package:provider/provider.dart';
 
 class AddIncomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String newNameIncome = 'Default';
+    double newFactorIncome = 1.0;
+
     return Container(
       color: Color(0xff757575),
       child: Container(
@@ -37,15 +42,16 @@ class AddIncomeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 200.0,
-                  height: 50.0,
-                  child: TextField(
-                    style: TextStyle(fontSize: 20.0),
-                    autofocus: true,
-                    textAlign: TextAlign.center,
-                    onEditingComplete: () => {},
-                  ),
-                ),
+                    width: 200.0,
+                    height: 50.0,
+                    child: TextField(
+                      style: TextStyle(fontSize: 20.0),
+                      autofocus: true,
+                      textAlign: TextAlign.center,
+                      onChanged: (newName) {
+                        newNameIncome = newName;
+                      },
+                    ))
               ],
             ),
             Row(
@@ -68,7 +74,8 @@ class AddIncomeScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 20.0),
                     autofocus: true,
                     textAlign: TextAlign.center,
-                    onEditingComplete: () => {},
+                    onChanged: (newFactor) =>
+                        newFactorIncome = double.parse(newFactor),
                   ),
                 ),
               ],
@@ -76,15 +83,20 @@ class AddIncomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               child: FlatButton(
-                  onPressed: () {},
-                  color: Colors.lightBlueAccent,
-                  child: Text(
-                    'Añadir',
+                color: Colors.lightBlueAccent,
+                child: Text('Añadir',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
-                        fontWeight: FontWeight.bold),
-                  )),
+                        fontWeight: FontWeight.bold)),
+                onPressed: () {
+                  print(newNameIncome);
+                  print(newFactorIncome);
+                  Provider.of<IncomeData>(context)
+                      .addIncome(newNameIncome, newFactorIncome);
+                  Navigator.pop(context);
+                },
+              ),
             )
           ],
         ),
