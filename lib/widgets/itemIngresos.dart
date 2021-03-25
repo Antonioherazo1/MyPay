@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ItemIngresos extends StatelessWidget {
-  String title;
+  final String title;
 
   ItemIngresos({this.title});
 

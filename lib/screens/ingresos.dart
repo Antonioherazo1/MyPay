@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/itemIngresos.dart';
+import '../screens/add_IncomeScreen.dart';
 
 class Ingresos extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _IngresosState extends State<Ingresos> {
           children: [
             Center(
               child: Container(
-                  height: 400.0,
+                  height: 550.0,
                   margin: EdgeInsets.all(10.0),
                   child: ListView.builder(
                       itemCount: nameTipoIngresos.length,
@@ -38,19 +39,32 @@ class _IngresosState extends State<Ingresos> {
                       })),
             ),
             FlatButton(
+              color: Colors.lightBlueAccent,
               onPressed: () {
-                String NewType = 'NewType' + '${nameTipoIngresos.length + 1}';
-                setState(() {
-                  nameTipoIngresos.add(NewType);
-                });
+                // String NewType = 'NewType' + '${nameTipoIngresos.length + 1}';
+                // setState(() {
+                //   nameTipoIngresos.add(NewType);
+                // });
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => SingleChildScrollView(
+                            child: Container(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: AddIncomeScreen(),
+                        )));
               },
-              child: Text(
-                'Nuevo Tipo de Ingreso',
-                style: TextStyle(
-                  color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  'Nuevo Ingreso',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30.0,
+                  ),
                 ),
               ),
-              color: Colors.lightBlueAccent,
             )
           ],
         ),
