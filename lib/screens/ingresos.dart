@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/itemIngresos.dart';
 import '../screens/add_IncomeScreen.dart';
+import 'package:mi_pago/models/incomes.dart';
 
 class Ingresos extends StatefulWidget {
   @override
@@ -8,11 +9,15 @@ class Ingresos extends StatefulWidget {
 }
 
 class _IngresosState extends State<Ingresos> {
-  List<String> nameTipoIngresos = [
-    'Extras Dirunas',
-    'Recargos Nocturnos',
-    'Diurnas Festivas',
-    'Extras Dominicales'
+  List<Income> nameTipoIngresos = [
+    Income(name: 'Extras Dirunas'),
+    Income(name: 'Recargos Nocturnos'),
+    Income(name: 'Diurnas Festivas'),
+    Income(name: 'Extras Dominicales')
+    // 'Extras Dirunas',
+    // 'Recargos Nocturnos',
+    // 'Diurnas Festivas',
+    // 'Extras Dominicales'
   ];
 
   @override
@@ -35,7 +40,8 @@ class _IngresosState extends State<Ingresos> {
                       itemCount: nameTipoIngresos.length,
                       itemBuilder: (context, index) {
                         return ItemIngresos(
-                            title: '${nameTipoIngresos[index]}');
+                            title: nameTipoIngresos[index].name,
+                            factor: nameTipoIngresos[index].factor);
                       })),
             ),
             FlatButton(

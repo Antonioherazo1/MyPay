@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class ItemIngresos extends StatelessWidget {
   final String title;
+  final double factor;
 
-  ItemIngresos({this.title});
+  ItemIngresos({this.title, this.factor});
 
   @override
   Widget build(BuildContext context) {
@@ -56,19 +57,19 @@ class ItemIngresos extends StatelessWidget {
                   width: 100.0,
                   height: 50.0,
                   child: TextField(
-                      style: TextStyle(fontSize: 30.0),
-                      textAlignVertical: TextAlignVertical.top,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent),
-                            borderRadius: BorderRadius.circular(20)),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      // onChanged: (){},
-                      ),
+                    style: TextStyle(fontSize: 30.0),
+                    textAlignVertical: TextAlignVertical.top,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                          borderRadius: BorderRadius.circular(20)),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    // onChanged: (){},
+                  ),
                 ),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text("10000", style: TextStyle(fontSize: 50.0))
