@@ -7,16 +7,14 @@ void main() {
   runApp(MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-          create: (context) => IncomeData(),
-          child: MaterialApp(
+      create: (context) => IncomeData(),
+      child: MaterialApp(
         home: PantallaInicio(),
       ),
     );
   }
 }
-

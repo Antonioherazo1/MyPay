@@ -3,11 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:mi_pago/models/incomeData.dart';
 import 'package:provider/provider.dart';
 
-class AddIncomeScreen extends StatelessWidget {
+class AddIncomeScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
+  _AddIncomeScreenState createState() => _AddIncomeScreenState();
+}
+
+class _AddIncomeScreenState extends State<AddIncomeScreen> {
+  // final nameControllerTF = TextEditingController();
     String newNameIncome = 'Default';
     double newFactorIncome = 1.0;
+
+  @override
+  Widget build(BuildContext context) {
+
 
     return Container(
       color: Color(0xff757575),

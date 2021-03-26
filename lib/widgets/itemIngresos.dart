@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mi_pago/models/income.dart';
+import 'package:mi_pago/models/incomeData.dart';
 
-class ItemIngresos extends StatefulWidget {
-  String title;
-  double factor;
-  int value;
-  int total = 0;
+class ItemIngresos extends StatelessWidget {
+  final Income income;
+  // final String title;
+  // final double factor;
+  // final int value;
+  // final int total = 0;
+  final Function textFieldCallback;
 
-  ItemIngresos({this.title, this.factor, this.value});
+  ItemIngresos({this.income, this.textFieldCallback});
 
-  @override
-  _ItemIngresosState createState() => _ItemIngresosState();
-}
-
-class _ItemIngresosState extends State<ItemIngresos> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,7 +34,7 @@ class _ItemIngresosState extends State<ItemIngresos> {
             ),
             child: Center(
               child: Text(
-                '${widget.title}'.toUpperCase(),
+                '${income.name}'.toUpperCase(),
                 style: TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold,
@@ -75,16 +74,12 @@ class _ItemIngresosState extends State<ItemIngresos> {
                       filled: true,
                       fillColor: Colors.white,
                     ),
-                    onChanged: (newValue) {
-                      setState(() {
-                        
-                      });
-                    },
+                    onChanged: textFieldCallback,
                   ),
                 ),
-                Text('${widget.factor}'),
+                Text('${income.factor}'),
                 Text("=", style: TextStyle(fontSize: 50.0)),
-                Text(widget.total.toString(), style: TextStyle(fontSize: 50.0))
+                Text('${income.total}', style: TextStyle(fontSize: 50.0))
               ],
             ),
           )
