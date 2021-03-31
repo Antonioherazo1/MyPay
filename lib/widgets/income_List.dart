@@ -10,15 +10,13 @@ class Income_List extends StatelessWidget {
       builder: (context, incomeData, child) {
         return Center(
           child: Container(
-              height: 550.0,
+              height: 500.0,
               margin: EdgeInsets.all(10.0),
               child: ListView.builder(
                   itemCount: incomeData.nameTipoIngresos.length,
                   itemBuilder: (context, index) {
                     return ItemIngresos(
                         income: incomeData.nameTipoIngresos[index],
-                        // title: incomeData.nameTipoIngresos[index].name,
-                        // factor: incomeData.nameTipoIngresos[index].factor,
                         textFieldCallback: (newValue) {
                           incomeData.updateIncome(
                               incomeData.nameTipoIngresos[index], newValue);

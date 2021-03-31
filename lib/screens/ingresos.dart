@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../screens/add_IncomeScreen.dart';
+import 'package:mi_pago/widgets/newIncomeButtom.dart';
 import 'package:mi_pago/widgets/income_List.dart';
+import 'package:mi_pago/widgets/valor_unitario.dart';
 
 class Ingresos extends StatefulWidget {
   @override
@@ -8,48 +9,26 @@ class Ingresos extends StatefulWidget {
 }
 
 class _IngresosState extends State<Ingresos> {
-  
-
+  var txt = TextEditingController();
+  var txt2 = TextEditingController();
+  int valueUnitar = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: Text(
-            'Ingresosss',
+            'Ingresos',
             style: TextStyle(fontFamily: 'Dalgona'),
           ),
           automaticallyImplyLeading: false),
       body: Container(
         child: Column(
           children: [
+            ValorUnitario(txt: txt),
             //-------------List Builder -----------//
             Income_List(),
             //-------------List Builder -----------//
-            FlatButton(
-              color: Colors.lightBlueAccent,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  'Nuevo Ingreso',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                  ),
-                ),
-              ),
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => SingleChildScrollView(
-                            child: Container(
-                          padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom),
-                          child: AddIncomeScreen(),
-                        )));
-              },
-
-            )
+            NewIncomeButtom()
           ],
         ),
       ),
@@ -58,7 +37,10 @@ class _IngresosState extends State<Ingresos> {
 }
 
 
-                // String NewType = 'NewType' + '${nameTipoIngresos.length + 1}';
-                // setState(() {
-                //   nameTipoIngresos.add(NewType);
-                // });
+
+
+
+// String NewType = 'NewType' + '${nameTipoIngresos.length + 1}';
+// setState(() {
+//   nameTipoIngresos.add(NewType);
+// });

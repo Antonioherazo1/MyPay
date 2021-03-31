@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mi_pago/models/income.dart';
-import 'package:mi_pago/models/incomeData.dart';
 
 class ItemIngresos extends StatelessWidget {
   final Income income;
-  // final String title;
-  // final double factor;
-  // final int value;
-  // final int total = 0;
   final Function textFieldCallback;
 
   ItemIngresos({this.income, this.textFieldCallback});
@@ -20,7 +15,7 @@ class ItemIngresos extends StatelessWidget {
         children: [
           Container(
             height: 30.0,
-            width: 280.0,
+            width: 300.0,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.center,
@@ -79,7 +74,7 @@ class ItemIngresos extends StatelessWidget {
                 ),
                 Text('${income.factor}'),
                 Text("=", style: TextStyle(fontSize: 50.0)),
-                Text('${income.total}', style: TextStyle(fontSize: 50.0))
+                Text('${income.total}', style: TextStyle(fontSize: 40.0))
               ],
             ),
           )

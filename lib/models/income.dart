@@ -2,7 +2,7 @@ class Income {
   String name;
   double factor;
   int value;
-  int total;
+  int total = 0;
 
   Income({this.name, this.factor =1.0});
 
