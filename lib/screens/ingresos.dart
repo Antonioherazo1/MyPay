@@ -24,7 +24,7 @@ class _IngresosState extends State<Ingresos> {
       body: Container(
         child: Column(
           children: [
-            ValorUnitario(txt: txt),
+            ValorUnitario(),
             //-------------List Builder -----------//
             Income_List(),
             //-------------List Builder -----------//
