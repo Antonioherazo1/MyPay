@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mi_pago/models/incomeData.dart';
+import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
 
-class AddIncomeScreen extends StatefulWidget {
+class Add_ItemScreen extends StatefulWidget {
   @override
   _AddIncomeScreenState createState() => _AddIncomeScreenState();
 }
 
-class _AddIncomeScreenState extends State<AddIncomeScreen> {
+class _AddIncomeScreenState extends State<Add_ItemScreen> {
   // final nameControllerTF = TextEditingController();
     String newNameIncome = 'Default';
     double newFactorIncome = 1.0;
@@ -100,7 +100,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                 onPressed: () {
                   print(newNameIncome);
                   print(newFactorIncome);
-                  Provider.of<IncomeData>(context)
+                  Provider.of<ItemData>(context)
                       .addIncome(newNameIncome, newFactorIncome);
                   Navigator.pop(context);
                 },

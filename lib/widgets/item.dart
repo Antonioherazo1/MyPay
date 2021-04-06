@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:mi_pago/models/income.dart';
+import 'package:mi_pago/models/itemModel.dart';
 
-class ItemIngresos extends StatelessWidget {
-  final Income income;
+class Item extends StatefulWidget {
+  final Item_Model item;
   final Function textFieldCallback;
+  String initValue;
 
-  ItemIngresos({this.income, this.textFieldCallback});
+  Item({this.item, this.textFieldCallback, this.initValue});
+
+  @override
+  _ItemIngresosState createState() => _ItemIngresosState();
+}
+
+class _ItemIngresosState extends State<Item> {
+  var txtController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    txtController.text = this.widget.initValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +42,7 @@ class ItemIngresos extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                '${income.name}'.toUpperCase(),
+                '${widget.item.name}'.toUpperCase(),
                 style: TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold,
@@ -58,6 +71,7 @@ class ItemIngresos extends StatelessWidget {
                   width: 100.0,
                   height: 50.0,
                   child: TextField(
+                    controller: txtController,
                     style: TextStyle(fontSize: 30.0),
                     textAlignVertical: TextAlignVertical.top,
                     textAlign: TextAlign.center,
@@ -69,12 +83,12 @@ class ItemIngresos extends StatelessWidget {
                       filled: true,
                       fillColor: Colors.white,
                     ),
-                    onChanged: textFieldCallback,
+                    onChanged: widget.textFieldCallback,
                   ),
                 ),
-                Text('${income.factor}'),
+                Text('${widget.item.factor}'),
                 Text("=", style: TextStyle(fontSize: 50.0)),
-                Text('${income.total}', style: TextStyle(fontSize: 40.0))
+                Text('${widget.item.total}', style: TextStyle(fontSize: 40.0))
               ],
             ),
           )

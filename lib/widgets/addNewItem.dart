@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import '../screens/add_IncomeScreen.dart';
+import '../screens/add_ItemScreen.dart';
 
-class NewIncomeButtom extends StatelessWidget {
-  const NewIncomeButtom({
-    Key key,
-  }) : super(key: key);
+class AddNewItemButtom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +25,7 @@ class NewIncomeButtom extends StatelessWidget {
                     child: Container(
                   padding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: AddIncomeScreen(),
+                  child: Add_ItemScreen(),
                 )));
       },
     );

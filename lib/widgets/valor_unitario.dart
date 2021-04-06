@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:mi_pago/models/incomeData.dart';
+import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
 
-class ValorUnitario extends StatelessWidget {
-  // const ValorUnitario({
-  //   Key key,
-  //   @required this.txt,
-  // }) : super(key: key);
+class ValorUnitario extends StatefulWidget {
+  final String initValue;
+  ValorUnitario({this.initValue});
 
-  final TextEditingController txt = TextEditingController();  
+  @override
+  _ValorUnitarioState createState() => _ValorUnitarioState();
+}
+
+class _ValorUnitarioState extends State<ValorUnitario> {
+  var txtController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    txtController.text = widget.initValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +26,16 @@ class ValorUnitario extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('Valor Hora:  \$ ',
-            style:
-                TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold)),
         SizedBox(
           width: 100.0,
           height: 50.0,
           child: TextField(
-            style:
-            TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-            controller: txt,
+            controller: txtController,
+            style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
             keyboardType: TextInputType.number,
             onChanged: (value) {
-              Provider.of<IncomeData>(context)
+              Provider.of<ItemData>(context)
                   .updateValorUnit(int.parse(value));
             },
           ),

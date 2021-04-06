@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mi_pago/widgets/newIncomeButtom.dart';
-import 'package:mi_pago/widgets/income_List.dart';
+import 'package:mi_pago/widgets/addNewItem.dart';
+import 'package:mi_pago/widgets/itemList.dart';
 import 'package:mi_pago/widgets/valor_unitario.dart';
+import 'package:provider/provider.dart';
+import 'package:mi_pago/models/itemData.dart';
 
 class Ingresos extends StatefulWidget {
   @override
@@ -12,6 +14,13 @@ class _IngresosState extends State<Ingresos> {
   var txt = TextEditingController();
   var txt2 = TextEditingController();
   int valueUnitar = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Provider.of<IncomeData>(context).addIncome('wwww', 1.2);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,23 +33,12 @@ class _IngresosState extends State<Ingresos> {
       body: Container(
         child: Column(
           children: [
-            ValorUnitario(),
-            //-------------List Builder -----------//
-            Income_List(),
-            //-------------List Builder -----------//
-            NewIncomeButtom()
+            ValorUnitario(initValue: '${Provider.of<ItemData>(context).valorUnitario}'),
+            ItemList(),
+            AddNewItemButtom()
           ],
         ),
       ),
     );
   }
 }
-
-
-
-
-
-// String NewType = 'NewType' + '${nameTipoIngresos.length + 1}';
-// setState(() {
-//   nameTipoIngresos.add(NewType);
-// });
