@@ -3,41 +3,55 @@ import 'package:flutter/foundation.dart';
 import 'package:mi_pago/models/itemModel.dart';
 
 class ItemData extends ChangeNotifier {
-  List<Item_Model> nameTipoItem = [];
+  List cicloDePago = ['Semanal', 'Quincenal', 'Mensual'];
+  List<ItemModel> incomeList = [];
+  List<ItemModel> egressList = [];
   int valorUnitario = 0;
   int totalizador = 0;
+  int diasCicloPago;
 
-  void addIncome(String newNameIncome, double newFactorincome) {
-    final income = Item_Model(name: newNameIncome, factor: newFactorincome);
-    nameTipoItem.add(income);
+  void addItem(String newNameItem, double newFactorItem, bool incomee) {
+    final income = ItemModel(name: newNameItem, factor: newFactorItem);
+    if (incomee) {
+      incomeList.add(income);
+    } else {
+      egressList.add(income);
+    }
     notifyListeners();
   }
 
-  void updateItem(Item_Model income, String value) {
+  void updateItem(ItemModel income, String value) {
     double factor = income.factor;
     int valueInt = int.parse(value);
     income.value = valueInt;
     income.total = (valueInt * factor * valorUnitario).toInt();
     updateTotal();
-    // notifyListeners();
   }
 
   void updateValorUnit(int valorUnitario) {
     this.valorUnitario = valorUnitario;
-    nameTipoItem.forEach((income) {
+    incomeList.forEach((income) {
       int producto = (valorUnitario * income.value * income.factor).toInt();
       income.total = producto;
       updateTotal();
-      // notifyListeners();
+    });
+    egressList.forEach((egress) {
+      int producto = (valorUnitario * egress.value * egress.factor).toInt();
+      egress.total = producto;
+      updateTotal();
     });
   }
 
   void updateTotal() {
-    int sumatoria = 0;
-    nameTipoItem.forEach((income) {
-      sumatoria += income.total;
+    int sumIncome = 0;
+    int sumEgress = 0;
+    incomeList.forEach((income) {
+      sumIncome += income.total;
     });
-    totalizador = sumatoria;
+    egressList.forEach((egress) {
+      sumEgress += egress.total;
+    });
+    totalizador = sumIncome - sumEgress;
     notifyListeners();
   }
 }

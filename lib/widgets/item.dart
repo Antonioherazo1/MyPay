@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mi_pago/models/itemModel.dart';
 
 class Item extends StatefulWidget {
-  final Item_Model item;
+  final ItemModel item;
   final Function textFieldCallback;
-  String initValue;
+  final String initValue;
 
   Item({this.item, this.textFieldCallback, this.initValue});
 

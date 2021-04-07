@@ -1,12 +1,9 @@
-class Item_Model {
-  String name;
-  double factor;
+class ItemModel {
+  String name = '';
+  double factor = 1.0;
   int value = 0;
   int total = 0;
+  String payCycle;
 
-  Item_Model({this.name, this.factor =1.0});
-
-  void computeIncome() {
-    total = value*factor.toInt();    
-  }
+  ItemModel({this.name, this.factor});
 }

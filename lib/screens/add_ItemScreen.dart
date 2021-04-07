@@ -2,21 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
+import 'package:mi_pago/widgets/dropDownList.dart';
 
-class Add_ItemScreen extends StatefulWidget {
+class AddItemScreen extends StatefulWidget {
+  bool income;
+  String tipo;
+  AddItemScreen({this.income, this.tipo});
+
   @override
   _AddIncomeScreenState createState() => _AddIncomeScreenState();
 }
 
-class _AddIncomeScreenState extends State<Add_ItemScreen> {
-  // final nameControllerTF = TextEditingController();
-    String newNameIncome = 'Default';
-    double newFactorIncome = 1.0;
+class _AddIncomeScreenState extends State<AddItemScreen> {
+  List factorMultiplicaA = ['Valor hora', 'Valor dia', 'Pago total'];
+  String newNameIncome = 'Default';
+  double newFactorIncome = 1.0;
 
   @override
   Widget build(BuildContext context) {
-
-
     return Container(
       color: Color(0xff757575),
       child: Container(
@@ -30,7 +33,7 @@ class _AddIncomeScreenState extends State<Add_ItemScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'AÑADIR NUEVO INGRESO',
+              'AÑADIR NUEVO ${widget.tipo}',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.lightBlueAccent,
@@ -89,6 +92,20 @@ class _AddIncomeScreenState extends State<Add_ItemScreen> {
               ],
             ),
             Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ' FACTOR POR ? :',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.bold),
+                    ),
+                    DroppDownList(listItem: factorMultiplicaA),
+                  ]),
+            ),
+            Padding(
               padding: const EdgeInsets.only(top: 30.0),
               child: FlatButton(
                 color: Colors.lightBlueAccent,
@@ -98,10 +115,8 @@ class _AddIncomeScreenState extends State<Add_ItemScreen> {
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold)),
                 onPressed: () {
-                  print(newNameIncome);
-                  print(newFactorIncome);
                   Provider.of<ItemData>(context)
-                      .addIncome(newNameIncome, newFactorIncome);
+                      .addItem(newNameIncome, newFactorIncome, widget.income);
                   Navigator.pop(context);
                 },
               ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_pago/widgets/addNewItem.dart';
+import 'package:mi_pago/widgets/addNewItemButtom.dart';
 import 'package:mi_pago/widgets/itemList.dart';
 import 'package:mi_pago/widgets/valor_unitario.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +33,10 @@ class _IngresosState extends State<Ingresos> {
       body: Container(
         child: Column(
           children: [
-            ValorUnitario(initValue: '${Provider.of<ItemData>(context).valorUnitario}'),
-            ItemList(),
-            AddNewItemButtom()
+            ValorUnitario(
+                initValue: '${Provider.of<ItemData>(context).valorUnitario}'),
+            ItemList(income: true),
+            AddNewItemButtom(income: true, tipo: 'INGRESO')
           ],
         ),
       ),

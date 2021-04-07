@@ -5,7 +5,9 @@ import 'item.dart';
 import 'package:mi_pago/widgets/totalizador.dart';
 
 class ItemList extends StatelessWidget {
-  final TextEditingController txtController = TextEditingController();
+  final bool income;
+
+  ItemList({this.income});
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +20,20 @@ class ItemList extends StatelessWidget {
                   height: 450.0,
                   margin: EdgeInsets.all(10.0),
                   child: ListView.builder(
-                      itemCount: itemData.nameTipoItem.length,
+                      itemCount: income ? itemData.incomeList.length: itemData.egressList.length ,
                       itemBuilder: (context, index) {
-                        return Item(
-                          initValue: '${itemData.nameTipoItem[index].value}',
-                          //---------------------------
-                          item: itemData.nameTipoItem[index],
-                          //---------------------------
-                          textFieldCallback: (newValue) {
-                            itemData.updateItem(
-                                itemData.nameTipoItem[index], newValue);
-                          },
-                          //---------------------------
-                            );
+                        return income ? 
+                        Item(initValue: '${itemData.incomeList[index].value}',
+                              item:itemData.incomeList[index], 
+                              textFieldCallback: (newValue) {
+                                itemData.updateItem(itemData.incomeList[index], newValue);                                  
+                              }) 
+                      : Item(initValue: '${itemData.egressList[index].value}',
+                              item:itemData.egressList[index], 
+                              textFieldCallback: (newValue) {
+                                itemData.updateItem(itemData.egressList[index], newValue);                                  
+                              });
+                        
                       })),
               Totalizador(total: itemData.totalizador),
             ],
