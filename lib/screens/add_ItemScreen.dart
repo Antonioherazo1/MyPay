@@ -5,18 +5,19 @@ import 'package:provider/provider.dart';
 import 'package:mi_pago/widgets/dropDownList.dart';
 
 class AddItemScreen extends StatefulWidget {
-  bool income;
   String tipo;
-  AddItemScreen({this.income, this.tipo});
+
+  AddItemScreen({this.tipo});
 
   @override
   _AddIncomeScreenState createState() => _AddIncomeScreenState();
 }
 
 class _AddIncomeScreenState extends State<AddItemScreen> {
-  List factorMultiplicaA = ['Valor hora', 'Valor dia', 'Pago total'];
+  List factorMultiplicaAEgre = ['Valor hora', 'Valor dia', 'Pago total'];
   String newNameIncome = 'Default';
   double newFactorIncome = 1.0;
+  String valueChoosen = 'Valor hora';
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            //-------Titulo Nuevo Item a agregar ------------
             Text(
               'AÑADIR NUEVO ${widget.tipo}',
               textAlign: TextAlign.center,
@@ -40,6 +42,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold),
             ),
+            //--------------Elegir Nombre ------------
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -65,6 +68,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                     ))
               ],
             ),
+            //-------------Elegir Factor -------------
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -91,20 +95,33 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                 ),
               ],
             ),
+            //---------------- Elegir "Factor por"--------------
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      ' FACTOR POR ? :',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                    DroppDownList(listItem: factorMultiplicaA),
-                  ]),
+              child: widget.tipo == 'EGRESO'
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                          Text(
+                            ' FACTOR POR ? :',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                          ),
+                          DroppDownList(
+                            listItem: factorMultiplicaAEgre,
+                            callBackValueChoosen: (newValue) {
+                              setState(() {
+                                Provider.of<ItemData>(context)
+                                    .dropDownChoosenValue = newValue;
+                                valueChoosen = newValue;
+                              });
+                            },
+                          )
+                        ])
+                  : null,
             ),
+            //-------- Boton Añadir ---------------
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               child: FlatButton(
@@ -116,7 +133,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                         fontWeight: FontWeight.bold)),
                 onPressed: () {
                   Provider.of<ItemData>(context)
-                      .addItem(newNameIncome, newFactorIncome, widget.income);
+                      .addItem(newNameIncome, newFactorIncome, widget.tipo, valueChoosen);
                   Navigator.pop(context);
                 },
               ),

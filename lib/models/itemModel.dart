@@ -3,7 +3,7 @@ class ItemModel {
   double factor = 1.0;
   int value = 0;
   int total = 0;
-  String payCycle;
+  String factorMultiplicaA;
 
-  ItemModel({this.name, this.factor});
+  ItemModel({this.name, this.factor, this.factorMultiplicaA});
 }

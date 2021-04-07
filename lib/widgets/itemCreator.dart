@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mi_pago/models/itemModel.dart';
 
-class Item extends StatefulWidget {
+class ItemCreator extends StatefulWidget {
   final ItemModel item;
   final Function textFieldCallback;
   final String initValue;
 
-  Item({this.item, this.textFieldCallback, this.initValue});
+  ItemCreator({this.item, this.textFieldCallback, this.initValue});
 
   @override
-  _ItemIngresosState createState() => _ItemIngresosState();
+  _ItemCreatorState createState() => _ItemCreatorState();
 }
 
-class _ItemIngresosState extends State<Item> {
+class _ItemCreatorState extends State<ItemCreator> {
   var txtController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -68,7 +69,7 @@ class _ItemIngresosState extends State<Item> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(
-                  width: 100.0,
+                  width: 80.0,
                   height: 50.0,
                   child: TextField(
                     controller: txtController,
@@ -86,7 +87,14 @@ class _ItemIngresosState extends State<Item> {
                     onChanged: widget.textFieldCallback,
                   ),
                 ),
-                Text('${widget.item.factor}'),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('${widget.item.factor}'),
+                    Text(' x '),
+                    Text('${widget.item.factorMultiplicaA}')
+                  ],
+                ),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text('${widget.item.total}', style: TextStyle(fontSize: 40.0))
               ],

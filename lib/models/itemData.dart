@@ -6,25 +6,48 @@ class ItemData extends ChangeNotifier {
   List cicloDePago = ['Semanal', 'Quincenal', 'Mensual'];
   List<ItemModel> incomeList = [];
   List<ItemModel> egressList = [];
+  int horasLaboralesDiarias = 8;
   int valorUnitario = 0;
   int totalizador = 0;
-  int diasCicloPago;
+  int sumIncome = 0;
+  int sumEgress = 0;
+  String dropDownChoosenValue;
 
-  void addItem(String newNameItem, double newFactorItem, bool incomee) {
-    final income = ItemModel(name: newNameItem, factor: newFactorItem);
-    if (incomee) {
-      incomeList.add(income);
+  void addItem(String newNameItem, double newFactorItem, String tipo,
+      String factorMultiplicaA) {
+    //Se crea un objeto tipo ItemModel y se le
+    // pasan los parametros desde el constructor
+    final newItem = ItemModel(
+        name: newNameItem,
+        factor: newFactorItem,
+        factorMultiplicaA: factorMultiplicaA);
+    // se elige a que lista se agrega el nuevo
+    //item a Ingresos o a Egresos
+    if (tipo == 'INGRESO') {
+      incomeList.add(newItem);
     } else {
-      egressList.add(income);
+      egressList.add(newItem);
     }
+    //se notifican los Consumidores del provider
     notifyListeners();
   }
 
   void updateItem(ItemModel income, String value) {
     double factor = income.factor;
     int valueInt = int.parse(value);
+    int factorrMultiplicaA;
+    //--Traducir el "factorMultiplicaA" de String a su equivalente en números ----------
+    if (income.factorMultiplicaA == 'Valor hora') {
+      factorrMultiplicaA = 1;
+    } else if (income.factorMultiplicaA == 'Valor dia') {
+      factorrMultiplicaA = 8;
+    } else {
+      factorrMultiplicaA = this.totalizador;
+    }
+    //------------------
     income.value = valueInt;
-    income.total = (valueInt * factor * valorUnitario).toInt();
+    income.total =
+        (valueInt * factor * valorUnitario * factorrMultiplicaA).toInt();
     updateTotal();
   }
 
@@ -43,8 +66,8 @@ class ItemData extends ChangeNotifier {
   }
 
   void updateTotal() {
-    int sumIncome = 0;
-    int sumEgress = 0;
+    sumIncome = 0;
+    sumEgress = 0;
     incomeList.forEach((income) {
       sumIncome += income.total;
     });

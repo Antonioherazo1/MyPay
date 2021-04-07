@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:mi_pago/models/itemData.dart';
+import 'package:provider/provider.dart';
 
 class DroppDownList extends StatefulWidget {
   List listItem;
-  DroppDownList({this.listItem});
+  Function callBackValueChoosen;
+  DroppDownList({this.listItem, this.callBackValueChoosen});
 
   @override
   _DroppDownListState createState() => _DroppDownListState();
 }
 
 class _DroppDownListState extends State<DroppDownList> {
-  String valueChoose;
-
   @override
   Widget build(BuildContext context) {
     return Container(
       child: DropdownButton(
         hint: Text('Elige una opcion'),
         //---------------------
-        value: valueChoose,
+        value: Provider.of<ItemData>(context).dropDownChoosenValue,
         //---------------------
         items: widget.listItem.map((valueItem) {
           return DropdownMenuItem(
@@ -26,11 +27,7 @@ class _DroppDownListState extends State<DroppDownList> {
           );
         }).toList(),
         //---------------------
-        onChanged: (newValue) {
-          setState(() {
-            valueChoose = newValue;
-          });
-        },
+        onChanged: widget.callBackValueChoosen,
         //---------------------
       ),
     );

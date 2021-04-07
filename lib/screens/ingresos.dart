@@ -36,7 +36,7 @@ class _IngresosState extends State<Ingresos> {
             ValorUnitario(
                 initValue: '${Provider.of<ItemData>(context).valorUnitario}'),
             ItemList(income: true),
-            AddNewItemButtom(income: true, tipo: 'INGRESO')
+            AddNewItemButtom(tipo:'INGRESO')
           ],
         ),
       ),
