@@ -45,7 +45,7 @@ class _DroppDownFactorPorState extends State<DroppDownFactorPor> {
             //---------------------
             onChanged: (newValue) {
               setState(() {
-                Provider.of<ItemData>(context).factorMultiplicaA_String =
+                Provider.of<ItemData>(context).factorPor =
                     newValue;
                 valueChoosen = newValue;
               });

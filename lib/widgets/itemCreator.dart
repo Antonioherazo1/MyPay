@@ -87,21 +87,22 @@ class _ItemCreatorState extends State<ItemCreator> {
                     onChanged: widget.textFieldCallback,
                   ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Text('${widget.item.factor}'),
-                    Text(widget.item.factor == 1
-                        ? 'horas'
-                        : widget.item.factor.toString()),
-                    Text(widget.item.factor == 1 ? '=' : 'x'),
-                    Text(widget.item.value == 56
-                        ? '7 Dias'
-                        : widget.item.value == 112
-                            ? '15 Dias'
-                            : '30 Dias')
-                  ],
-                ),
+                Text('${widget.item.columnFactor}'),
+                // Column(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     // Text('${widget.item.factor}'),
+                //     Text(widget.item.factor == 1
+                //         ? 'horas'
+                //         : widget.item.factor.toString()),
+                //     Text(widget.item.factor == 1 ? '=' : 'x'),
+                //     Text(widget.item.value == 56
+                //         ? '7 Dias'
+                //         : widget.item.value == 112
+                //             ? '15 Dias'
+                //             : '30 Dias')
+                //   ],
+                // ),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text('${widget.item.total}', style: TextStyle(fontSize: 40.0))
               ],

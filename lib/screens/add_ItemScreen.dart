@@ -14,10 +14,10 @@ class AddItemScreen extends StatefulWidget {
 }
 
 class _AddIncomeScreenState extends State<AddItemScreen> {
-
-  String newNameIncome = 'Default';
-  double newFactorIncome = 1.0;
+  String newNameItem = 'Default';
+  double newFactorItem = 1.0;
   int valueChoosenInt = 1;
+  String factorDescrip = '';
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                       autofocus: true,
                       textAlign: TextAlign.center,
                       onChanged: (newName) {
-                        newNameIncome = newName;
+                        newNameItem = newName;
                       },
                     ))
               ],
@@ -90,7 +90,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                     autofocus: true,
                     textAlign: TextAlign.center,
                     onChanged: (newFactor) =>
-                        newFactorIncome = double.parse(newFactor),
+                        newFactorItem = double.parse(newFactor),
                   ),
                 ),
               ],
@@ -98,8 +98,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
             //---------------- Elegir "Factor por"--------------
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: widget.tipo == 'EGRESO'
-                  ? DroppDownFactorPor(): null,                  
+              child: widget.tipo == 'EGRESO' ? DroppDownFactorPor() : null,
             ),
             //-------- Boton Añadir ---------------
             Padding(
@@ -112,24 +111,29 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold)),
                 onPressed: () {
-                  ItemData itemDataProvider = Provider.of<ItemData>(context);
-                  print(itemDataProvider.factorMultiplicaA_String);
-                  if (widget.tipo == 'EGRESO') {
-                    // Se traduce la opción seleccionada de opción tipo String
-                    // a su valor equivalente en Entero
-                    if (itemDataProvider.factorMultiplicaA_String ==
-                        'Valor hora') {
-                      valueChoosenInt = 1;
-                    } else if (itemDataProvider.factorMultiplicaA_String ==
-                        'Valor día') {
-                      valueChoosenInt = 8;
-                    } else {
-                      valueChoosenInt = itemDataProvider.sumIncome;
-                    }
-                  }
-                  //Se invoca la funcion addItem del Provider -----
-                  Provider.of<ItemData>(context).addItem(newNameIncome,
-                      newFactorIncome, widget.tipo, valueChoosenInt);
+                  // Se traduce la opción seleccionada de opción tipo String
+                  // a su valor equivalente en Entero
+                  valueChoosenInt = parseIntFactorPor(
+                      Provider.of<ItemData>(context).factorPor,
+                      Provider.of<ItemData>(context).sumIncome);
+                  // se procede a crear el String que describe el factor del item
+                  // llamando la funcion factorDescripCreator
+                  factorDescrip = factorDescripCreator(widget.tipo,
+                      Provider.of<ItemData>(context).factorPor, newFactorItem);
+                  //Se procede a añadir el nuevo item con los datos listos,
+                  //dependiendo del tipo de item Income o Egress
+                  widget.tipo == 'EGRESO'
+                      ? Provider.of<ItemData>(context).addEgressItem(
+                          newNameItem,
+                          newFactorItem,
+                          valueChoosenInt,
+                          factorDescrip)
+                      : Provider.of<ItemData>(context).addIncomeItem(
+                          newNameItem,
+                          newFactorItem,
+                          valueChoosenInt,
+                          factorDescrip);
+
                   Navigator.pop(context);
                 },
               ),
@@ -139,4 +143,30 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
       ),
     );
   }
+}
+
+int parseIntFactorPor(String factorPorString, int sumIncome) {
+  int factorPorInt = 1;
+  factorPorString == 'EGRESO'
+      ? factorPorString == 'Valor hora'
+          ? factorPorInt = 1
+          : factorPorString == 'Valor día'
+              ? factorPorInt = 8
+              : factorPorInt = sumIncome
+      // ignore: unnecessary_statements
+      : null;
+  return factorPorInt;
+}
+
+String factorDescripCreator(
+  String tipo,
+  String factorPor,
+  double factor,
+) {
+  String factorDescrip = '';
+  tipo == 'EGRESO'
+      ? factorDescrip = '''$factor por
+$factorPor'''
+      : factorDescrip = '$factor';
+  return factorDescrip;
 }

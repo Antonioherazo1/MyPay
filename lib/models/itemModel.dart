@@ -6,7 +6,7 @@ class ItemModel {
   int value = 0;
   int total = 0;
   int factorPor;
-  Column columnDescrip;
+  String columnFactor;
 
-  ItemModel({this.name, this.factor, this.factorPor, this.columnDescrip});
+  ItemModel({this.name, this.factor, this.factorPor, this.columnFactor});
 }

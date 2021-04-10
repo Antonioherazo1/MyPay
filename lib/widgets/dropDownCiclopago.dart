@@ -40,30 +40,25 @@ class _DroppDownCiclopagoState extends State<DroppDownCiclopago> {
             }).toList(),
             //---------------------
             onChanged: (newValue) {
-              setState(() {
-                switch (newValue) {
-                  case 'Semanal':
-                    Provider.of<ItemData>(context).cicloPago =
-                        56; //56 horas semanales
-                    break;
-                  case 'Quincenal':
-                    Provider.of<ItemData>(context).cicloPago =
-                        112; //112 horas semanales
-                    break;
-                  case 'Mensual':
-                    Provider.of<ItemData>(context).cicloPago =
-                        224; //224 horas semanales
-                    break;
-                  default:
-                }
-                valueChoosen = newValue;
+              String descripFactor = '''Horas por
+$newValue''';
 
-                if (Provider.of<ItemData>(context).incomeList.length < 1) {
+              setState(() {
+                newValue == 'Semanal'
+                    ? Provider.of<ItemData>(context).cicloPago = 56
+                    : newValue == 'Semanal'
+                        ? Provider.of<ItemData>(context).cicloPago = 112
+                        : Provider.of<ItemData>(context).cicloPago = 224;
+                //---------
+                valueChoosen = newValue;
+                if (Provider.of<ItemData>(context).ingresoFijoExist == false) {
                   final fixIncome = ItemModel(
                     name: 'Ingreso Fijo',
                     factor: 1,
                     factorPor: 1,
+                    columnFactor: descripFactor,
                   );
+                  Provider.of<ItemData>(context).ingresoFijoExist = true;
                   Provider.of<ItemData>(context).incomeList.add(fixIncome);
                 }
                 // Incvocamos la funcion upDateItem de Provider para actualizar cambio de cicloPago

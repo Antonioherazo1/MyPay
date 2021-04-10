@@ -1,4 +1,5 @@
 // import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mi_pago/models/itemModel.dart';
 
@@ -8,29 +9,39 @@ class ItemData extends ChangeNotifier {
   int totalizador = 0;
   int sumIncome = 0;
   int sumEgress = 0;
-  int cicloPago ;
-  String factorMultiplicaA_String = 'Valor hora';
-
-  
+  int cicloPago;
+  bool ingresoFijoExist = false;
+  String factorPor = 'Valor hora';
 
   List<ItemModel> incomeList = [];
   List<ItemModel> egressList = [];
 
-  void addItem(String newNameItem, double newFactorItem, String tipo,
-      int factorMultiplicaA) {
+  void addIncomeItem(String newNameItem, double newFactorItem,
+      int factorPor, String columnFactor) {
     //Se crea un objeto tipo ItemModel y se le
-    // pasan los parametros desde el constructor
+    // pasan los parametros ingresados en la función
     final newItem = ItemModel(
         name: newNameItem,
         factor: newFactorItem,
-        factorPor: factorMultiplicaA);
-    // se elige a que lista se agrega el nuevo
-    //item a Ingresos o a Egresos
-    if (tipo == 'INGRESO') {
-      incomeList.add(newItem);
-    } else {
-      egressList.add(newItem);
-    }
+        factorPor: factorPor,
+        columnFactor: columnFactor);
+    // Se añade el nuevo item a Ingresos
+    incomeList.add(newItem);
+    //se notifican los Consumidores del provider
+    notifyListeners();
+  }
+
+  void addEgressItem(String newNameItem, double newFactorItem, int factorPor,
+      String columnFactor) {
+    //Se crea un objeto tipo ItemModel y se le
+    // pasan los parametros ingresados en la función
+    final newItem = ItemModel(
+        name: newNameItem,
+        factor: newFactorItem,
+        factorPor: factorPor,
+        columnFactor: columnFactor);
+    // Se añade el nuevo item a Egresos
+    egressList.add(newItem);
     //se notifican los Consumidores del provider
     notifyListeners();
   }
@@ -40,8 +51,7 @@ class ItemData extends ChangeNotifier {
     int valueInt = int.parse(value);
     //------------------
     item.value = valueInt;
-    item.total =
-        (valueInt * factor * valorUnitario * item.factorPor).toInt();
+    item.total = (valueInt * factor * valorUnitario * item.factorPor).toInt();
     updateTotal();
   }
 
