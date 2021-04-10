@@ -5,8 +5,13 @@ import 'package:mi_pago/widgets/logoNameHeader.dart';
 import 'package:mi_pago/screens/balance.dart';
 import 'package:mi_pago/screens/tapBar.dart';
 import 'package:mi_pago/screens/estadistica.dart';
+import 'package:mi_pago/widgets/valor_unitario.dart';
+import 'package:provider/provider.dart';
+import 'package:mi_pago/models/itemData.dart';
+import 'package:mi_pago/widgets/dropDownCiclopago.dart';
 
 class HomeScreem extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,15 +33,19 @@ class HomeScreem extends StatelessWidget {
             child: Column(
               children: [
                 LogoNameWidget(),
+                ValorUnitario(
+                    initValue:
+                        '${Provider.of<ItemData>(context).valorUnitario}'),
+                DroppDownCiclopago(),
                 Container(
                   margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container( 
-                        height: 150.0,
-                        width: 160.0,
-                        margin: EdgeInsets.all(15.0),
+                      Container(
+                        height: 80.0,
+                        width: 350.0,
+                        margin: EdgeInsets.all(5.0),
                         child: RaisedButton(
                           padding: EdgeInsets.all(20.0),
                           color: Colors.green[700],
@@ -57,30 +66,6 @@ class HomeScreem extends StatelessWidget {
                           },
                         ),
                       ),
-                      Container(
-                        height: 150,
-                        width: 160,
-                        margin: EdgeInsets.all(15.0),
-                        child: RaisedButton(
-                          padding: EdgeInsets.all(20.0),
-                          color: Colors.redAccent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)),
-                          child: Text(
-                            'Egresos',
-                            style: TextStyle(
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white70),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TapBarPage()));
-                          },
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -95,7 +80,7 @@ class HomeScreem extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>BalanceGeneral()));
+                              builder: (context) => BalanceGeneral()));
                     },
                     color: Colors.blue,
                     child: Row(
@@ -153,35 +138,34 @@ class HomeScreem extends StatelessWidget {
                 ),
                 Container(
                   height: 100.0,
-                  width: 350.0,     
-                  margin: EdgeInsets.all(20.0),        
+                  width: 350.0,
+                  margin: EdgeInsets.all(20.0),
                   child: RaisedButton(
-                      color: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Archivos()));
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Icon(
-                              Icons.backup,
-                              size: 55.0,
-                              color: Colors.white70,
-                              ),
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Archivos()));
+                    },
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Icon(
+                            Icons.backup,
+                            size: 55.0,
+                            color: Colors.white70,
                           ),
-                          Text('Archivos',
-                          style: TextStyle(fontSize: 30.0, color: Colors.white70),)
-                        ],
-                      ),
-                      
-                      ),
-
+                        ),
+                        Text(
+                          'Archivos',
+                          style:
+                              TextStyle(fontSize: 30.0, color: Colors.white70),
+                        )
+                      ],
+                    ),
+                  ),
                 )
               ],
             ),

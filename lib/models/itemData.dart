@@ -1,26 +1,29 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mi_pago/models/itemModel.dart';
 
 class ItemData extends ChangeNotifier {
-  List cicloDePago = ['Semanal', 'Quincenal', 'Mensual'];
-  List<ItemModel> incomeList = [];
-  List<ItemModel> egressList = [];
   int horasLaboralesDiarias = 8;
   int valorUnitario = 0;
   int totalizador = 0;
   int sumIncome = 0;
   int sumEgress = 0;
-  String dropDownChoosenValue;
+  int cicloPago ;
+  String factorMultiplicaA_String = 'Valor hora';
+
+  
+
+  List<ItemModel> incomeList = [];
+  List<ItemModel> egressList = [];
 
   void addItem(String newNameItem, double newFactorItem, String tipo,
-      String factorMultiplicaA) {
+      int factorMultiplicaA) {
     //Se crea un objeto tipo ItemModel y se le
     // pasan los parametros desde el constructor
     final newItem = ItemModel(
         name: newNameItem,
         factor: newFactorItem,
-        factorMultiplicaA: factorMultiplicaA);
+        factorPor: factorMultiplicaA);
     // se elige a que lista se agrega el nuevo
     //item a Ingresos o a Egresos
     if (tipo == 'INGRESO') {
@@ -32,22 +35,13 @@ class ItemData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateItem(ItemModel income, String value) {
-    double factor = income.factor;
+  void updateItem(ItemModel item, String value) {
+    double factor = item.factor;
     int valueInt = int.parse(value);
-    int factorrMultiplicaA;
-    //--Traducir el "factorMultiplicaA" de String a su equivalente en números ----------
-    if (income.factorMultiplicaA == 'Valor hora') {
-      factorrMultiplicaA = 1;
-    } else if (income.factorMultiplicaA == 'Valor dia') {
-      factorrMultiplicaA = 8;
-    } else {
-      factorrMultiplicaA = this.totalizador;
-    }
     //------------------
-    income.value = valueInt;
-    income.total =
-        (valueInt * factor * valorUnitario * factorrMultiplicaA).toInt();
+    item.value = valueInt;
+    item.total =
+        (valueInt * factor * valorUnitario * item.factorPor).toInt();
     updateTotal();
   }
 

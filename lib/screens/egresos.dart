@@ -26,7 +26,6 @@ class _EgresosState extends State<Egresos> {
       body: Container(
         child: Column(
           children: [
-            ValorUnitario(initValue: '${Provider.of<ItemData>(context).valorUnitario}'), 
             ItemList(income: false), 
             AddNewItemButtom(tipo: 'EGRESO')
           ],

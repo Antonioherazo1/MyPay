@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
-import 'package:mi_pago/widgets/dropDownList.dart';
+import 'package:mi_pago/widgets/dropDownFactorPor.dart';
 
 class AddItemScreen extends StatefulWidget {
   String tipo;
@@ -14,10 +14,10 @@ class AddItemScreen extends StatefulWidget {
 }
 
 class _AddIncomeScreenState extends State<AddItemScreen> {
-  List factorMultiplicaAEgre = ['Valor hora', 'Valor dia', 'Pago total'];
+
   String newNameIncome = 'Default';
   double newFactorIncome = 1.0;
-  String valueChoosen = 'Valor hora';
+  int valueChoosenInt = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -99,27 +99,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: widget.tipo == 'EGRESO'
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                          Text(
-                            ' FACTOR POR ? :',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
-                          ),
-                          DroppDownList(
-                            listItem: factorMultiplicaAEgre,
-                            callBackValueChoosen: (newValue) {
-                              setState(() {
-                                Provider.of<ItemData>(context)
-                                    .dropDownChoosenValue = newValue;
-                                valueChoosen = newValue;
-                              });
-                            },
-                          )
-                        ])
-                  : null,
+                  ? DroppDownFactorPor(): null,                  
             ),
             //-------- Boton Añadir ---------------
             Padding(
@@ -132,8 +112,24 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold)),
                 onPressed: () {
-                  Provider.of<ItemData>(context)
-                      .addItem(newNameIncome, newFactorIncome, widget.tipo, valueChoosen);
+                  ItemData itemDataProvider = Provider.of<ItemData>(context);
+                  print(itemDataProvider.factorMultiplicaA_String);
+                  if (widget.tipo == 'EGRESO') {
+                    // Se traduce la opción seleccionada de opción tipo String
+                    // a su valor equivalente en Entero
+                    if (itemDataProvider.factorMultiplicaA_String ==
+                        'Valor hora') {
+                      valueChoosenInt = 1;
+                    } else if (itemDataProvider.factorMultiplicaA_String ==
+                        'Valor día') {
+                      valueChoosenInt = 8;
+                    } else {
+                      valueChoosenInt = itemDataProvider.sumIncome;
+                    }
+                  }
+                  //Se invoca la funcion addItem del Provider -----
+                  Provider.of<ItemData>(context).addItem(newNameIncome,
+                      newFactorIncome, widget.tipo, valueChoosenInt);
                   Navigator.pop(context);
                 },
               ),

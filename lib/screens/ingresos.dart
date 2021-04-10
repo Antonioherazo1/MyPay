@@ -32,12 +32,7 @@ class _IngresosState extends State<Ingresos> {
           automaticallyImplyLeading: false),
       body: Container(
         child: Column(
-          children: [
-            ValorUnitario(
-                initValue: '${Provider.of<ItemData>(context).valorUnitario}'),
-            ItemList(income: true),
-            AddNewItemButtom(tipo:'INGRESO')
-          ],
+          children: [ItemList(income: true), AddNewItemButtom(tipo: 'INGRESO')],
         ),
       ),
     );
