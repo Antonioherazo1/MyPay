@@ -40,8 +40,8 @@ class _DroppDownCiclopagoState extends State<DroppDownCiclopago> {
             }).toList(),
             //---------------------
             onChanged: (newValue) {
-              String descripFactor = '''Horas por
-$newValue''';
+              String descripFactor = '''Horas
+$newValue${'es'}''';
 
               setState(() {
                 newValue == 'Semanal'
