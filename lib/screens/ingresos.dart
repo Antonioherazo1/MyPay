@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_pago/widgets/addNewItemButtom.dart';
 import 'package:mi_pago/widgets/itemList.dart';
-import 'package:mi_pago/widgets/valor_unitario.dart';
-import 'package:provider/provider.dart';
-import 'package:mi_pago/models/itemData.dart';
 
 class Ingresos extends StatefulWidget {
   @override

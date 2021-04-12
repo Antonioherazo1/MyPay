@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
-import 'package:mi_pago/widgets/dropDownFactorPor.dart';
+import 'package:mi_pago/widgets/dropDownEgressType.dart';
 
 class AddItemScreen extends StatefulWidget {
+  
   String tipo;
 
   AddItemScreen({this.tipo});
@@ -15,7 +16,7 @@ class AddItemScreen extends StatefulWidget {
 
 class _AddIncomeScreenState extends State<AddItemScreen> {
   String newNameItem = 'Default';
-  double newFactorItem = 1.0;
+  double newEgressType = 1.0;
   int valueChoosenInt = 1;
   String factorDescrip = '';
 
@@ -42,7 +43,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold),
             ),
-            //--------------Elegir Nombre ------------
+            //--------------TextField Elegir Nombre ------------
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -68,7 +69,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                     ))
               ],
             ),
-            //-------------Elegir Factor -------------
+            //-------------TextField Elegir Factor -------------
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -89,18 +90,18 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                     style: TextStyle(fontSize: 20.0),
                     autofocus: true,
                     textAlign: TextAlign.center,
-                    onChanged: (newFactor) =>
-                        newFactorItem = double.parse(newFactor),
+                    onChanged: (newValue) =>
+                        newEgressType = double.parse(newValue),
                   ),
                 ),
               ],
             ),
-            //---------------- Elegir "Factor por"--------------
+            //---------------- DropDown Elegir " Tipo de Egreso "--------------
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: widget.tipo == 'EGRESO' ? DroppDownFactorPor() : null,
+              child: widget.tipo == 'EGRESO' ? DroppDownEgressType() : null,
             ),
-            //-------- Boton Añadir ---------------
+            //-------- FlatBoton Añadir ---------------
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               child: FlatButton(
@@ -119,18 +120,18 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                   // se procede a crear el String que describe el factor del item
                   // llamando la funcion factorDescripCreator
                   factorDescrip = factorDescripCreator(widget.tipo,
-                      Provider.of<ItemData>(context).factorPor, newFactorItem);
+                      Provider.of<ItemData>(context).factorPor, newEgressType);
                   //Se procede a añadir el nuevo item con los datos listos,
                   //dependiendo del tipo de item Income o Egress
                   widget.tipo == 'EGRESO'
                       ? Provider.of<ItemData>(context).addEgressItem(
                           newNameItem,
-                          newFactorItem,
+                          newEgressType,
                           valueChoosenInt,
                           factorDescrip)
                       : Provider.of<ItemData>(context).addIncomeItem(
                           newNameItem,
-                          newFactorItem,
+                          newEgressType,
                           valueChoosenInt,
                           factorDescrip);
 

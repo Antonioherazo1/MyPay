@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mi_pago/models/itemData.dart';
 
-class DroppDownFactorPor extends StatefulWidget {
+class DroppDownEgressType extends StatefulWidget {
   @override
-  _DroppDownFactorPorState createState() => _DroppDownFactorPorState();
+  _DroppDownEgressTypeState createState() => _DroppDownEgressTypeState();
 }
 
-class _DroppDownFactorPorState extends State<DroppDownFactorPor> {
-    List<String> factorPorEgresos = [
-    'Valor hora',
-    'Valor día',
-    'Total ingresos'
+class _DroppDownEgressTypeState extends State<DroppDownEgressType> {
+  List<String> factorPorEgresos = [
+    'Cantidad Fija',
+    'Fracción Ingresos del ciclo',
+    'Fracción Ingresos mensuales Exedidos'
   ];
 
   String valueChoosen;
@@ -23,10 +23,9 @@ class _DroppDownFactorPorState extends State<DroppDownFactorPor> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            ' FACTOR POR ? :',
+            ' TIPO EGRESO:',
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20.0, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
           DropdownButton(
             hint: Text('Elige una opcion'),
@@ -45,8 +44,8 @@ class _DroppDownFactorPorState extends State<DroppDownFactorPor> {
             //---------------------
             onChanged: (newValue) {
               setState(() {
-                Provider.of<ItemData>(context).factorPor =
-                    newValue;
+                // Provider.of<ItemData>(context).factorPor = newValue;
+                Provider.of<ItemData>(context).egressType = newValue;
                 valueChoosen = newValue;
               });
             },
