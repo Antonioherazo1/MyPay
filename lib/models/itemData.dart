@@ -25,7 +25,8 @@ class ItemData extends ChangeNotifier {
         name: newNameItem,
         factor: newFactorItem,
         factorPor: factorPor,
-        columnFactor: columnFactor);
+        columnFactor: columnFactor,
+        itemFijo: false);
     // Se añade el nuevo item a Ingresos
     incomeList.add(newItem);
     //se notifican los Consumidores del provider
@@ -40,7 +41,8 @@ class ItemData extends ChangeNotifier {
         name: newNameItem,
         factor: newFactorItem,
         factorPor: factorPor,
-        columnFactor: columnFactor);
+        columnFactor: columnFactor,
+        itemFijo: false);
     // Se añade el nuevo item a Egresos
     egressList.add(newItem);
     //se notifican los Consumidores del provider

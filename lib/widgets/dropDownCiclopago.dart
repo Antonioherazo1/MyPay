@@ -58,6 +58,7 @@ $newValue${'es'}''';
                     factor: 1,
                     factorPor: 1,
                     columnFactor: descripFactor,
+                    itemFijo: true
                   );
                   providerData.indexIngFijo = providerData.incomeList.length;
                   providerData.ingresoFijoExist = true;
