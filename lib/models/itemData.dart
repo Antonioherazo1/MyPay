@@ -12,6 +12,7 @@ class ItemData extends ChangeNotifier {
   int cicloPago;
   bool ingresoFijoExist = false;
   String factorPor = 'Valor hora';
+  int indexIngFijo = 0;
 
   List<ItemModel> incomeList = [];
   List<ItemModel> egressList = [];

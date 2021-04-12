@@ -59,8 +59,15 @@ $newValue${'es'}''';
                     factorPor: 1,
                     columnFactor: descripFactor,
                   );
+                  providerData.indexIngFijo = providerData.incomeList.length;
                   providerData.ingresoFijoExist = true;
                   providerData.incomeList.add(fixIncome);
+                } else {
+                  int index = providerData.indexIngFijo;
+                  print('valor index: $index');
+                  providerData.incomeList[index].columnFactor = descripFactor;
+                  providerData.updateItem(providerData.incomeList[index],
+                      providerData.incomeList[index].value.toString());
                 }
                 // Incvocamos la funcion upDateItem de Provider para actualizar cambio de cicloPago
                 providerData.updateItem(
