@@ -11,7 +11,7 @@ class ItemData extends ChangeNotifier {
   int sumEgress = 0;
   int cicloPago;
   bool ingresoFijoExist = false;
-  String factorPor = 'Valor hora';
+  String factorPo = 'Valor hora';
   int indexIngFijo = 0;
   String egressType = '';
 
@@ -25,8 +25,7 @@ class ItemData extends ChangeNotifier {
     final newItem = ItemModel(
         name: newNameItem,
         factor: newFactorItem,
-        factorPor: factorPor,
-        columnFactor: columnFactor,
+        middleItemDescrip: columnFactor,
         itemFijo: false);
     // Se añade el nuevo item a Ingresos
     incomeList.add(newItem);
@@ -41,8 +40,7 @@ class ItemData extends ChangeNotifier {
     final newItem = ItemModel(
         name: newNameItem,
         factor: newFactorItem,
-        factorPor: factorPor,
-        columnFactor: columnFactor,
+        middleItemDescrip: columnFactor,
         itemFijo: false);
     // Se añade el nuevo item a Egresos
     egressList.add(newItem);
@@ -55,7 +53,7 @@ class ItemData extends ChangeNotifier {
     int valueInt = int.parse(value);
     //------------------
     item.value = valueInt;
-    item.total = (valueInt * factor * valorUnitario * item.factorPor).toInt();
+    item.total = (valueInt * factor * valorUnitario).toInt();
     updateTotal();
   }
 

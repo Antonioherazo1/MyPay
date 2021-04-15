@@ -69,13 +69,12 @@ class _ItemCreatorState extends State<ItemCreator> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 widget.item.itemFijo
-                    ? Text(
-                        '${widget.item.value}',
-                        style: TextStyle(fontSize: 30.0),
-                      )
-                    :
-                TextFieldItem(txtController: txtController, widget: widget),
-                Text('${widget.item.columnFactor}'),
+                    ?Text(
+                          '${widget.item.value}',
+                          style: TextStyle(fontSize: 30.0),
+                        ):
+                         TextFieldItem(txtController: txtController, widget: widget),
+                Text('${widget.item.middleItemDescrip}'),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text('${widget.item.total}', style: TextStyle(fontSize: 40.0))
               ],

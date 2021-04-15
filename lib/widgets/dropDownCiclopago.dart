@@ -47,7 +47,7 @@ $newValue${'es'}''';
                 ItemData providerData = Provider.of<ItemData>(context);
                 newValue == 'Semanal'
                     ? providerData.cicloPago = 56
-                    : newValue == 'Semanal'
+                    : newValue == 'Quincenal'
                         ? providerData.cicloPago = 112
                         : providerData.cicloPago = 224;
                 //---------
@@ -56,8 +56,7 @@ $newValue${'es'}''';
                   final fixIncome = ItemModel(
                     name: 'Ingreso Fijo',
                     factor: 1,
-                    factorPor: 1,
-                    columnFactor: descripFactor,
+                    middleItemDescrip: descripFactor,
                     itemFijo: true
                   );
                   providerData.indexIngFijo = providerData.incomeList.length;
@@ -66,7 +65,7 @@ $newValue${'es'}''';
                 } else {
                   int index = providerData.indexIngFijo;
                   print('valor index: $index');
-                  providerData.incomeList[index].columnFactor = descripFactor;
+                  providerData.incomeList[index].middleItemDescrip = descripFactor;
                   providerData.updateItem(providerData.incomeList[index],
                       providerData.incomeList[index].value.toString());
                 }

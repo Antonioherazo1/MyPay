@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
 import 'package:mi_pago/widgets/dropDownEgressType.dart';
+import 'package:mi_pago/models/itemModel.dart';
 
 class AddItemScreen extends StatefulWidget {
-  
   String tipo;
+  double newFactorItem = 1.0;
 
   AddItemScreen({this.tipo});
 
@@ -16,9 +17,10 @@ class AddItemScreen extends StatefulWidget {
 
 class _AddIncomeScreenState extends State<AddItemScreen> {
   String newNameItem = 'Default';
-  double newEgressType = 1.0;
-  int valueChoosenInt = 1;
-  String factorDescrip = '';
+  int dropDwnFactorNewValue = 1;
+  String middleItemDescrip = '';
+  String cantidadFija = '''Cantidad 
+Fija''';
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                     height: 50.0,
                     child: TextField(
                       style: TextStyle(fontSize: 20.0),
-                      autofocus: true,
+                      // autofocus: true,
                       textAlign: TextAlign.center,
                       onChanged: (newName) {
                         newNameItem = newName;
@@ -69,39 +71,21 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                     ))
               ],
             ),
-            //-------------TextField Elegir Factor -------------
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0, right: 30.0),
-                  child: Text(
-                    'FACTOR',
-                    textAlign: TextAlign.center,
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  width: 200.0,
-                  height: 50.0,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(fontSize: 20.0),
-                    autofocus: true,
-                    textAlign: TextAlign.center,
-                    onChanged: (newValue) =>
-                        newEgressType = double.parse(newValue),
-                  ),
-                ),
-              ],
-            ),
-            //---------------- DropDown Elegir " Tipo de Egreso "--------------
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: widget.tipo == 'EGRESO' ? DroppDownEgressType() : null,
+              child: widget.tipo == 'EGRESO'
+                  ? Column(
+                      children: [
+                        DroppDownEgressType(), //---DropDwon Elegir Tipo Egreso
+                        //Si es elegida "Catidad Fija" no se muestra el TextField 'FACTOR'
+                        Provider.of<ItemData>(context).egressType == cantidadFija                                
+                            ? Text('')
+                            : TFieldFactorWidget(widget: widget),//---TextField Elegir Factor                                 
+                      ],
+                    )
+                  : TFieldFactorWidget(widget: widget),
             ),
-            //-------- FlatBoton Añadir ---------------
+            //-------- FlatButton Añadir --------
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               child: FlatButton(
@@ -114,27 +98,29 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                 onPressed: () {
                   // Se traduce la opción seleccionada de opción tipo String
                   // a su valor equivalente en Entero
-                  valueChoosenInt = parseIntFactorPor(
-                      Provider.of<ItemData>(context).factorPor,
+                  dropDwnFactorNewValue = parseIntFactorPor(
+                      Provider.of<ItemData>(context).egressType,
                       Provider.of<ItemData>(context).sumIncome);
                   // se procede a crear el String que describe el factor del item
                   // llamando la funcion factorDescripCreator
-                  factorDescrip = factorDescripCreator(widget.tipo,
-                      Provider.of<ItemData>(context).factorPor, newEgressType);
+                  middleItemDescrip = miiddleItemDescrip(
+                      widget.tipo,
+                      Provider.of<ItemData>(context).egressType,
+                      widget.newFactorItem);
                   //Se procede a añadir el nuevo item con los datos listos,
                   //dependiendo del tipo de item Income o Egress
+                  //
+                  //
+                  final newItem = ItemModel(
+                    itemType: widget.tipo == 'INGRESO'? 1:-1,
+                    itemFijo: false,
+                    name: newNameItem,
+                    factor: widget.newFactorItem,
+                    middleItemDescrip: middleItemDescrip,
+                    );
                   widget.tipo == 'EGRESO'
-                      ? Provider.of<ItemData>(context).addEgressItem(
-                          newNameItem,
-                          newEgressType,
-                          valueChoosenInt,
-                          factorDescrip)
-                      : Provider.of<ItemData>(context).addIncomeItem(
-                          newNameItem,
-                          newEgressType,
-                          valueChoosenInt,
-                          factorDescrip);
-
+                      ? Provider.of<ItemData>(context).egressList.add(newItem)                    
+                      : Provider.of<ItemData>(context).incomeList.add(newItem);
                   Navigator.pop(context);
                 },
               ),
@@ -142,6 +128,44 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TFieldFactorWidget extends StatelessWidget {
+  const TFieldFactorWidget({
+    Key key,
+    @required this.widget,
+  }) : super(key: key);
+
+  final AddItemScreen widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 30.0, right: 30.0),
+          child: Text(
+            'FACTOR',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          width: 200.0,
+          height: 50.0,
+          child: TextField(
+            keyboardType: TextInputType.number,
+            style: TextStyle(fontSize: 20.0),
+            // autofocus: true,
+            textAlign: TextAlign.center,
+            onChanged: (newValue) =>
+                widget.newFactorItem = double.parse(newValue),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -159,7 +183,7 @@ int parseIntFactorPor(String factorPorString, int sumIncome) {
   return factorPorInt;
 }
 
-String factorDescripCreator(
+String miiddleItemDescrip(
   String tipo,
   String factorPor,
   double factor,

@@ -9,9 +9,15 @@ class DroppDownEgressType extends StatefulWidget {
 
 class _DroppDownEgressTypeState extends State<DroppDownEgressType> {
   List<String> factorPorEgresos = [
-    'Cantidad Fija',
-    'Fracción Ingresos del ciclo',
-    'Fracción Ingresos mensuales Exedidos'
+    '''Cantidad 
+Fija''',
+    '''Fracción 
+Ingresos 
+del ciclo''',
+    '''Fracción 
+Ingresos 
+mensuales 
+Exedidos'''
   ];
 
   String valueChoosen;
@@ -36,7 +42,7 @@ class _DroppDownEgressTypeState extends State<DroppDownEgressType> {
               return DropdownMenuItem(
                 value: valueItem,
                 child: Container(
-                  width: 100.0,
+                  width: 150.0,
                   child: Text(valueItem),
                 ),
               );
