@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mi_pago/models/itemData.dart';
 
-class DroppDownEgressType extends StatefulWidget {
+class DroppDownSubTypeItem extends StatefulWidget {
+
   @override
-  _DroppDownEgressTypeState createState() => _DroppDownEgressTypeState();
+  _DroppDownSubTypeItemState createState() => _DroppDownSubTypeItemState();
 }
 
-class _DroppDownEgressTypeState extends State<DroppDownEgressType> {
-  List<String> factorPorEgresos = [
+class _DroppDownSubTypeItemState extends State<DroppDownSubTypeItem> {
+  List<String> subTypeItem = [
     '''Cantidad 
 Fija''',
     '''Fracción 
@@ -38,7 +39,7 @@ Exedidos'''
             //---------------------
             value: valueChoosen,
             //---------------------
-            items: factorPorEgresos.map((valueItem) {
+            items: subTypeItem.map((valueItem) {
               return DropdownMenuItem(
                 value: valueItem,
                 child: Container(
@@ -51,7 +52,7 @@ Exedidos'''
             onChanged: (newValue) {
               setState(() {
                 // Provider.of<ItemData>(context).factorPor = newValue;
-                Provider.of<ItemData>(context).egressType = newValue;
+                Provider.of<ItemData>(context).subTypeItem = newValue;
                 valueChoosen = newValue;
               });
             },

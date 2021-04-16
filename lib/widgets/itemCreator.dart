@@ -53,7 +53,7 @@ class _ItemCreatorState extends State<ItemCreator> {
           ),
           Container(
             height: 70.0,
-            width: 350.0,
+            width: 380.0,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.center,
@@ -68,12 +68,13 @@ class _ItemCreatorState extends State<ItemCreator> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                widget.item.itemFijo
-                    ?Text(
+                widget.item.itemSubtypeInt == 1 // Si es Cantidad fija 
+                    ? widget.item.itemType == -1 // y tambien un egreso
+                      ? Text('') // entonces no dibuje nada
+                      : Text( // si no es un egreso pero Cantidad Fija devuleva un Text()
                           '${widget.item.value}',
-                          style: TextStyle(fontSize: 30.0),
-                        ):
-                         TextFieldItem(txtController: txtController, widget: widget),
+                          style: TextStyle(fontSize: 30.0))
+                    : TextFieldItem(txtController: txtController, widget: widget), //si no es cantidad fija devuelva un TextField                                           
                 Text('${widget.item.middleItemDescrip}'),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text('${widget.item.total}', style: TextStyle(fontSize: 40.0))

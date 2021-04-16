@@ -2,12 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
-import 'package:mi_pago/widgets/dropDownEgressType.dart';
+import 'package:mi_pago/widgets/droppDownSubTypeItem.dart';
 import 'package:mi_pago/models/itemModel.dart';
 
 class AddItemScreen extends StatefulWidget {
   String tipo;
-  double newFactorItem = 1.0;
+  int value = 0;
+  double factor = 1.0;
+  int subTypeItemInt = 1;
+  List<String> subTypeItemList = [
+    '''Cantidad 
+Fija''',
+    '''Fracción 
+Ingresos 
+del ciclo''',
+    '''Fracción 
+Ingresos 
+mensuales 
+Exedidos'''
+  ];
 
   AddItemScreen({this.tipo});
 
@@ -17,10 +30,7 @@ class AddItemScreen extends StatefulWidget {
 
 class _AddIncomeScreenState extends State<AddItemScreen> {
   String newNameItem = 'Default';
-  int dropDwnFactorNewValue = 1;
   String middleItemDescrip = '';
-  String cantidadFija = '''Cantidad 
-Fija''';
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +55,7 @@ Fija''';
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold),
             ),
-            //--------------TextField Elegir Nombre ------------
+            //--------------TextField Ingresar Nombre ------------
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -76,14 +86,23 @@ Fija''';
               child: widget.tipo == 'EGRESO'
                   ? Column(
                       children: [
-                        DroppDownEgressType(), //---DropDwon Elegir Tipo Egreso
+                        DroppDownSubTypeItem(), //---DropDown Elegir Suptipo de Item
                         //Si es elegida "Catidad Fija" no se muestra el TextField 'FACTOR'
-                        Provider.of<ItemData>(context).egressType == cantidadFija                                
-                            ? Text('')
-                            : TFieldFactorWidget(widget: widget),//---TextField Elegir Factor                                 
+                        Provider.of<ItemData>(context).subTypeItem ==
+                                widget.subTypeItemList[0] // Cantidad Fija
+                            ? TFieldNum(
+                                title: 'VALOR',
+                                widget: widget,
+                                destinoValue: 'value')
+                            : TFieldNum(
+                                title: 'FACTOR',
+                                widget: widget,
+                                destinoValue:
+                                    'factor'), //---TextField Elegir Factor
                       ],
                     )
-                  : TFieldFactorWidget(widget: widget),
+                  : TFieldNum(
+                      title: 'FACTOR', widget: widget, destinoValue: 'factor'),
             ),
             //-------- FlatButton Añadir --------
             Padding(
@@ -98,30 +117,38 @@ Fija''';
                 onPressed: () {
                   // Se traduce la opción seleccionada de opción tipo String
                   // a su valor equivalente en Entero
-                  dropDwnFactorNewValue = parseIntFactorPor(
-                      Provider.of<ItemData>(context).egressType,
-                      Provider.of<ItemData>(context).sumIncome);
+                  widget.subTypeItemInt = parseIntSubTypeItem(
+                      widget.subTypeItemList,
+                      Provider.of<ItemData>(context).subTypeItem);
                   // se procede a crear el String que describe el factor del item
                   // llamando la funcion factorDescripCreator
                   middleItemDescrip = miiddleItemDescrip(
                       widget.tipo,
-                      Provider.of<ItemData>(context).egressType,
-                      widget.newFactorItem);
+                      Provider.of<ItemData>(context).subTypeItem,
+                      widget.factor,
+                      widget.subTypeItemInt);
                   //Se procede a añadir el nuevo item con los datos listos,
                   //dependiendo del tipo de item Income o Egress
                   //
-                  //
+                  print('factor: ${widget.factor} value: ${widget.value} itemTipe ${widget.subTypeItemInt}');
                   final newItem = ItemModel(
-                    itemType: widget.tipo == 'INGRESO'? 1:-1,
-                    itemFijo: false,
-                    name: newNameItem,
-                    factor: widget.newFactorItem,
-                    middleItemDescrip: middleItemDescrip,
-                    );
+                      itemType: widget.tipo == 'INGRESO' ? 1 : -1,
+                      itemSubtypeInt: widget.subTypeItemInt,
+                      name: newNameItem,
+                      factor: widget.factor,
+                      middleItemDescrip: middleItemDescrip,
+                      value: widget.value,
+                      total: widget.tipo == 'EGRESO'
+                          ? widget.subTypeItemInt == 1
+                              ? widget.value: 0
+                          :0
+                  );
                   widget.tipo == 'EGRESO'
-                      ? Provider.of<ItemData>(context).egressList.add(newItem)                    
-                      : Provider.of<ItemData>(context).incomeList.add(newItem);
+                      ? Provider.of<ItemData>(context).addEgressItem(newItem)
+                      : Provider.of<ItemData>(context).addIncomeItem(newItem);
                   Navigator.pop(context);
+                  print(
+                      '${Provider.of<ItemData>(context).incomeList[Provider.of<ItemData>(context).indexIngFijo].value}');
                 },
               ),
             )
@@ -132,13 +159,11 @@ Fija''';
   }
 }
 
-class TFieldFactorWidget extends StatelessWidget {
-  const TFieldFactorWidget({
-    Key key,
-    @required this.widget,
-  }) : super(key: key);
-
-  final AddItemScreen widget;
+class TFieldNum extends StatelessWidget {
+  TFieldNum({this.title, this.widget, this.destinoValue});
+  String destinoValue;
+  String title;
+  AddItemScreen widget;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +173,7 @@ class TFieldFactorWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 30.0, right: 30.0),
           child: Text(
-            'FACTOR',
+            this.title,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
@@ -157,41 +182,44 @@ class TFieldFactorWidget extends StatelessWidget {
           width: 200.0,
           height: 50.0,
           child: TextField(
-            keyboardType: TextInputType.number,
-            style: TextStyle(fontSize: 20.0),
-            // autofocus: true,
-            textAlign: TextAlign.center,
-            onChanged: (newValue) =>
-                widget.newFactorItem = double.parse(newValue),
-          ),
+              keyboardType: TextInputType.number,
+              style: TextStyle(fontSize: 20.0),
+              // autofocus: true,
+              textAlign: TextAlign.center,
+              onChanged: (newValue) => destinoValue == 'value'
+                  ? // escriba el valor en "value"
+                  widget.value = int.parse(newValue)
+                  : // escriba el valor en "factor"
+                  widget.factor = double.parse(newValue)),
         ),
       ],
     );
   }
 }
 
-int parseIntFactorPor(String factorPorString, int sumIncome) {
-  int factorPorInt = 1;
-  factorPorString == 'EGRESO'
-      ? factorPorString == 'Valor hora'
-          ? factorPorInt = 1
-          : factorPorString == 'Valor día'
-              ? factorPorInt = 8
-              : factorPorInt = sumIncome
-      // ignore: unnecessary_statements
-      : null;
-  return factorPorInt;
+int parseIntSubTypeItem(List<String> subTypeItemList, String subTypeItemStr) {
+  int subTypeItem = 1;
+  subTypeItemStr == subTypeItemList[0] //cantidad Fija
+      ? subTypeItem = 1
+      : subTypeItemStr == subTypeItemList[1] // Fracción Ingresos del ciclo
+          ? subTypeItem = 2
+          : subTypeItem = 3; //Fracción Ingresos mensuales Exedidos
+  return subTypeItem;
 }
 
 String miiddleItemDescrip(
   String tipo,
-  String factorPor,
+  String subTypeStr,
   double factor,
+  int supTypeItemInt
 ) {
   String factorDescrip = '';
   tipo == 'EGRESO'
-      ? factorDescrip = '''$factor por
-$factorPor'''
-      : factorDescrip = '$factor';
+      ? supTypeItemInt == 1 ?
+          factorDescrip = '$subTypeStr' // Descrip Egresos Fijos
+      :factorDescrip = '''$factor por
+$subTypeStr'''// descripcion Egresos no fijos
+      : factorDescrip = '''Factor 
+$factor'''; // descripcion para ingresos
   return factorDescrip;
 }

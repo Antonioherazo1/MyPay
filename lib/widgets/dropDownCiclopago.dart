@@ -54,17 +54,17 @@ $newValue${'es'}''';
                 valueChoosen = newValue;
                 if (providerData.ingresoFijoExist == false) {
                   final fixIncome = ItemModel(
+                    itemType: 1, //Ingreso
                     name: 'Ingreso Fijo',
-                    factor: 1,
+                    factor: 1.0,
                     middleItemDescrip: descripFactor,
-                    itemFijo: true
+                    itemSubtypeInt: 1 // Cantidad Fija
                   );
                   providerData.indexIngFijo = providerData.incomeList.length;
                   providerData.ingresoFijoExist = true;
                   providerData.incomeList.add(fixIncome);
                 } else {
                   int index = providerData.indexIngFijo;
-                  print('valor index: $index');
                   providerData.incomeList[index].middleItemDescrip = descripFactor;
                   providerData.updateItem(providerData.incomeList[index],
                       providerData.incomeList[index].value.toString());

@@ -13,35 +13,19 @@ class ItemData extends ChangeNotifier {
   bool ingresoFijoExist = false;
   String factorPo = 'Valor hora';
   int indexIngFijo = 0;
-  String egressType = '';
+  String subTypeItem = '';
 
   List<ItemModel> incomeList = [];
   List<ItemModel> egressList = [];
 
-  void addIncomeItem(String newNameItem, double newFactorItem, int factorPor,
-      String columnFactor) {
-    //Se crea un objeto tipo ItemModel y se le
-    // pasan los parametros ingresados en la función
-    final newItem = ItemModel(
-        name: newNameItem,
-        factor: newFactorItem,
-        middleItemDescrip: columnFactor,
-        itemFijo: false);
-    // Se añade el nuevo item a Ingresos
+  void addIncomeItem(ItemModel newItem) {
+    // Se añade el nuevo item a Egresos
     incomeList.add(newItem);
     //se notifican los Consumidores del provider
     notifyListeners();
   }
 
-  void addEgressItem(String newNameItem, double newFactorItem, int factorPor,
-      String columnFactor) {
-    //Se crea un objeto tipo ItemModel y se le
-    // pasan los parametros ingresados en la función
-    final newItem = ItemModel(
-        name: newNameItem,
-        factor: newFactorItem,
-        middleItemDescrip: columnFactor,
-        itemFijo: false);
+  void addEgressItem(ItemModel newItem) {
     // Se añade el nuevo item a Egresos
     egressList.add(newItem);
     //se notifican los Consumidores del provider
