@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_pago/models/itemModel.dart';
+import 'package:provider/provider.dart';
+import 'package:mi_pago/models/itemData.dart';
 
 class ItemCreator extends StatefulWidget {
   final ItemModel item;
@@ -27,6 +29,7 @@ class _ItemCreatorState extends State<ItemCreator> {
       padding: EdgeInsets.only(bottom: 20.0),
       child: Column(
         children: [
+          //--- Primer recuadro Amarillo con Nombre del ITEM 
           Container(
             height: 30.0,
             width: 300.0,
@@ -51,6 +54,7 @@ class _ItemCreatorState extends State<ItemCreator> {
               ),
             ),
           ),
+          // Segundo Recuadro Amarillo con los Datos y valores del ITEM
           Container(
             height: 70.0,
             width: 380.0,
@@ -69,12 +73,17 @@ class _ItemCreatorState extends State<ItemCreator> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 widget.item.itemSubtypeInt == 1 // Si es Cantidad fija 
-                    ? widget.item.itemType == -1 // y tambien un egreso
-                      ? Text('') // entonces no dibuje nada
-                      : Text( // si no es un egreso pero Cantidad Fija devuleva un Text()
-                          '${widget.item.value}',
+                  ? widget.item.itemType == -1 // y tambien un egreso
+                    ? Text('') // entonces no dibuje nada
+                    : Text( '${widget.item.value}', // si no es un egreso pero Cantidad Fija devuleva un Text()                          
                           style: TextStyle(fontSize: 30.0))
-                    : TextFieldItem(txtController: txtController, widget: widget), //si no es cantidad fija devuelva un TextField                                           
+                : widget.item.itemSubtypeInt == 2 // si es un egreso por Fracción de ingresos de ciclo
+                    ? Text( '${Provider.of<ItemData>(context).sumIncome}', // entonces dibuje un Text con la sumatoria de los ingresos                        
+                          style: TextStyle(fontSize: 30.0))
+                    : widget.item.itemSubtypeInt == 3
+                      ? Text( '${Provider.of<ItemData>(context).sumIncome}', // entonces dibuje un Text con la sumatoria de los ingresos                        
+                          style: TextStyle(fontSize: 30.0)) 
+                      : TextFieldItem(txtController: txtController, widget: widget), //si no es cantidad fija ni Fraccion de ingresos de ciclo devuelva un TextField                                          
                 Text('${widget.item.middleItemDescrip}'),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text('${widget.item.total}', style: TextStyle(fontSize: 40.0))
