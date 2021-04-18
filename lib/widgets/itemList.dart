@@ -17,6 +17,10 @@ class ItemList extends StatelessWidget {
         return Center(
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Totalizador(total: itemData.totalizador),
+              ),
               Container(
                   height: 450.0,
                   margin: EdgeInsets.all(10.0),
@@ -36,7 +40,7 @@ class ItemList extends StatelessWidget {
                               });
                         
                       })),
-              Totalizador(total: itemData.totalizador),
+              
             ],
           ),
         );

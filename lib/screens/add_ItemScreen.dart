@@ -135,7 +135,9 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                       widget.tipo,
                       Provider.of<ItemData>(context).subTypeItem,
                       widget.factor,
-                      widget.subTypeItemInt);
+                      widget.subTypeItemInt,
+                      Provider.of<ItemData>(context).sumIncome,
+                      widget.value);
                   //Se procede a añadir el nuevo item con los datos listos, dependiendo del tipo de item Income o Egress
                   final newItem = ItemModel(
                       itemType: widget.tipo == 'INGRESO' ? 1 : -1,
@@ -158,14 +160,15 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                                       .toInt() // asigne a 'total' el valor de la suma de los ingresos por el factor ingresado
                                   : widget.subTypeItemInt ==
                                           3 // Y si al final es un Egreso por Fracción de Ingresos Exedido de cierta cantidad
-                                      ? 0.0
-                                      : 0.0 // TO_DO
+                                      ? 0
+                                      : 0 // TO_DO
                           : 0 // si al final no es un Egreso sinó un Ingreso asigne el valor de 0 a 'total'
                       );
                   widget.tipo == 'EGRESO'
                       ? Provider.of<ItemData>(context).addEgressItem(newItem)
                       : Provider.of<ItemData>(context).addIncomeItem(newItem);
-                  Provider.of<ItemData>(context).updateTotal(); //Actualizar total pago  
+                  Provider.of<ItemData>(context)
+                      .updateTotal(); //Actualizar total pago
                   Navigator.pop(context);
                 },
               ),
@@ -225,14 +228,20 @@ int parseIntSubTypeItem(List<String> subTypeItemList, String subTypeItemStr) {
   return subTypeItem;
 }
 
-String miiddleItemDescrip(
-    String tipo, String subTypeStr, double factor, int supTypeItemInt) {
+String miiddleItemDescrip(String tipo, String subTypeStr, double factor,
+    int supTypeItemInt, int sumIncome, int value) {
   String factorDescrip = '';
   tipo == 'EGRESO'
       ? supTypeItemInt == 1
           ? factorDescrip = '$subTypeStr' // Descrip Egresos Fijos
-          : factorDescrip = '''$factor por
-$subTypeStr''' // descripcion Egresos no fijos
+          : supTypeItemInt == 2
+              ? factorDescrip = '''$factor por
+los Ingresos 
+del ciclo: $sumIncome''' // descripcion Egresos Fraccion de Ingresos del ciclo
+              : factorDescrip = '''$factor por
+Ingresos 
+exedidos en: 
+$value ''' // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
       : factorDescrip = '''Factor 
 $factor'''; // descripcion para ingresos
   return factorDescrip;

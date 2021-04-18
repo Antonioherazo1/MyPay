@@ -31,7 +31,7 @@ class _ItemCreatorState extends State<ItemCreator> {
         children: [
           //--- Primer recuadro Amarillo con Nombre del ITEM 
           Container(
-            height: 30.0,
+            height: 50.0,
             width: 300.0,
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -44,14 +44,28 @@ class _ItemCreatorState extends State<ItemCreator> {
                 width: 2.0,
               ),
             ),
-            child: Center(
-              child: Text(
-                '${widget.item.name}'.toUpperCase(),
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0),
-              ),
+            child: Column(
+              children: [
+                Center(
+                  child: Text(
+                    '${widget.item.name}'.toUpperCase(),
+                    style: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    widget.item.itemSubtypeInt == 1 
+                    ? 'Cantidad no variable'
+                    : widget.item.itemSubtypeInt == 2
+                      ? 'Fracción Ingresos del Ciclo'
+                      : widget.item.itemSubtypeInt == 3
+                      ?'Fracción de Ingresos Mensuales Exedidos':'Cantidad Variable'
+                    ),
+                )
+              ],
             ),
           ),
           // Segundo Recuadro Amarillo con los Datos y valores del ITEM
@@ -73,15 +87,18 @@ class _ItemCreatorState extends State<ItemCreator> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 widget.item.itemType == -1 // Si es un egreso                 
-                  ? widget.item.itemSubtypeInt == 1 // y tambien es Cantidad fija
-                    ? Text('') 
-                    : widget.item.itemSubtypeInt == 2 // si es un egreso por Fracción de ingresos de ciclo                  
-                        ? Text( '${Provider.of<ItemData>(context).sumIncome}',style: TextStyle(fontSize: 30.0)) // entonces dibuje un Text con la sumatoria de los ingresos    
-                        :  widget.item.itemSubtypeInt == 3 
-                           ? Text( '${Provider.of<ItemData>(context).sumIncome}',style: TextStyle(fontSize: 30.0))  
-                           : Text('')        
-                  : TextFieldItem(txtController: txtController, widget: widget), //si no es cantidad fija ni Fraccion de ingresos de ciclo devuelva un TextField                                          
-                Text('${widget.item.middleItemDescrip}'),
+                  ?Text('')
+                  // ? widget.item.itemSubtypeInt == 1 // y tambien es Cantidad fija
+                  //   ? Text('') 
+                  //   : widget.item.itemSubtypeInt == 2 // si es un egreso por Fracción de ingresos de ciclo                  
+                  //       ? Text( '${Provider.of<ItemData>(context).sumIncome}',style: TextStyle(fontSize: 30.0)) // entonces dibuje un Text con la sumatoria de los ingresos    
+                  //       :  widget.item.itemSubtypeInt == 3 
+                  //          ? Text( '${Provider.of<ItemData>(context).sumIncome}',style: TextStyle(fontSize: 30.0))  
+                  //          : Text('')        
+                  : widget.item.itemSubtypeInt == 1
+                    ? Text( '${widget.item.value}',style: TextStyle(fontSize: 30.0))  
+                    :TextFieldItem(txtController: txtController, widget: widget), //si no es cantidad fija ni Fraccion de ingresos de ciclo devuelva un TextField                                          
+                Text('${widget.item.middleItemDescrip}',style: TextStyle(fontSize: 15.0)),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text('${widget.item.total}', style: TextStyle(fontSize: 40.0))
               ],
