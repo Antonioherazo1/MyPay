@@ -19,25 +19,30 @@ class ItemData extends ChangeNotifier {
   List<ItemModel> egressList = [];
 
   void addIncomeItem(ItemModel newItem) {
-    // Se añade el nuevo item a Egresos
-    incomeList.add(newItem);
-    //se notifican los Consumidores del provider
-    notifyListeners();
+    incomeList.add(newItem); // Se añade el nuevo item a Egresos
+    notifyListeners(); //se notifican los Consumidores del provider
   }
 
   void addEgressItem(ItemModel newItem) {
-    // Se añade el nuevo item a Egresos
-    egressList.add(newItem);
-    //se notifican los Consumidores del provider
-    notifyListeners();
+    egressList.add(newItem); // Se añade el nuevo item a Egresos
+    notifyListeners(); //se notifican los Consumidores del provider
   }
 
   void updateItem(ItemModel item, String value) {
     double factor = item.factor;
     int valueInt = int.parse(value);
-    //------------------
+    //Actualizamos Intem de ingresos
     item.value = valueInt;
     item.total = (valueInt * factor * valorUnitario).toInt();
+    updateTotal();
+    //Actualizar todos Item de egresos
+    egressList.forEach((egressItem) {
+      egressItem.itemSubtypeInt == 2
+          ? egressItem.total = (egressItem.factor * sumIncome).toInt()
+          : egressItem.itemSubtypeInt == 3
+              ? egressItem.total = 9999// TO_DO
+              : egressItem.total = egressItem.value;
+    });
     updateTotal();
   }
 
@@ -61,9 +66,11 @@ class ItemData extends ChangeNotifier {
     incomeList.forEach((income) {
       sumIncome += income.total;
     });
+    print('sumincome: $sumIncome');
     egressList.forEach((egress) {
       sumEgress += egress.total;
     });
+    print('SumEgress: $sumEgress');
     totalizador = sumIncome - sumEgress;
     notifyListeners();
   }

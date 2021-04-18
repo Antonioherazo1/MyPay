@@ -10,15 +10,11 @@ class DroppDownSubTypeItem extends StatefulWidget {
 
 class _DroppDownSubTypeItemState extends State<DroppDownSubTypeItem> {
   List<String> subTypeItem = [
-    '''Cantidad 
-Fija''',
-    '''Fracción 
-Ingresos 
+    'Cantidad Fija',
+    '''Fracción Ingresos 
 del ciclo''',
-    '''Fracción 
-Ingresos 
-mensuales 
-Exedidos'''
+    '''Fracción Ingresos 
+mensuales Exedidos'''
   ];
 
   String valueChoosen;
@@ -30,7 +26,8 @@ Exedidos'''
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            ' TIPO EGRESO:',
+            '''TIPO 
+EGRESO:''',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
@@ -51,7 +48,6 @@ Exedidos'''
             //---------------------
             onChanged: (newValue) {
               setState(() {
-                // Provider.of<ItemData>(context).factorPor = newValue;
                 Provider.of<ItemData>(context).subTypeItem = newValue;
                 valueChoosen = newValue;
               });

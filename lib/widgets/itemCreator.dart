@@ -72,18 +72,15 @@ class _ItemCreatorState extends State<ItemCreator> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                widget.item.itemSubtypeInt == 1 // Si es Cantidad fija 
-                  ? widget.item.itemType == -1 // y tambien un egreso
-                    ? Text('') // entonces no dibuje nada
-                    : Text( '${widget.item.value}', // si no es un egreso pero Cantidad Fija devuleva un Text()                          
-                          style: TextStyle(fontSize: 30.0))
-                : widget.item.itemSubtypeInt == 2 // si es un egreso por Fracción de ingresos de ciclo
-                    ? Text( '${Provider.of<ItemData>(context).sumIncome}', // entonces dibuje un Text con la sumatoria de los ingresos                        
-                          style: TextStyle(fontSize: 30.0))
-                    : widget.item.itemSubtypeInt == 3
-                      ? Text( '${Provider.of<ItemData>(context).sumIncome}', // entonces dibuje un Text con la sumatoria de los ingresos                        
-                          style: TextStyle(fontSize: 30.0)) 
-                      : TextFieldItem(txtController: txtController, widget: widget), //si no es cantidad fija ni Fraccion de ingresos de ciclo devuelva un TextField                                          
+                widget.item.itemType == -1 // Si es un egreso                 
+                  ? widget.item.itemSubtypeInt == 1 // y tambien es Cantidad fija
+                    ? Text('') 
+                    : widget.item.itemSubtypeInt == 2 // si es un egreso por Fracción de ingresos de ciclo                  
+                        ? Text( '${Provider.of<ItemData>(context).sumIncome}',style: TextStyle(fontSize: 30.0)) // entonces dibuje un Text con la sumatoria de los ingresos    
+                        :  widget.item.itemSubtypeInt == 3 
+                           ? Text( '${Provider.of<ItemData>(context).sumIncome}',style: TextStyle(fontSize: 30.0))  
+                           : Text('')        
+                  : TextFieldItem(txtController: txtController, widget: widget), //si no es cantidad fija ni Fraccion de ingresos de ciclo devuelva un TextField                                          
                 Text('${widget.item.middleItemDescrip}'),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text('${widget.item.total}', style: TextStyle(fontSize: 40.0))
