@@ -36,14 +36,40 @@ class ItemData extends ChangeNotifier {
     item.total = (valueInt * factor * valorUnitario).toInt();
     updateTotal();
     //Actualizar todos Item de egresos
-    egressList.forEach((egressItem) {
-      egressItem.itemSubtypeInt == 2
-          ? egressItem.total = (egressItem.factor * sumIncome).toInt()
-          : egressItem.itemSubtypeInt == 3
-              ? egressItem.total = 9999// TO_DO
-              : egressItem.total = egressItem.value;
-    });
+    egressList.forEach(
+      (egressItem) {
+        egressItem.itemSubtypeInt == 2
+            ? egressItem.total = (egressItem.factor * sumIncome).toInt()
+            : egressItem.itemSubtypeInt == 3
+                ? egressItem.total = 9999 // TO_DO
+                : egressItem.total = egressItem.value;
+
+        // Actulizamos las decripciones de cada ITEM de Egress
+        egressItem.middleItemDescrip = updateDescripEgress(egressItem.itemType, egressItem.factor,
+            egressItem.itemSubtypeInt, egressItem.value);
+      },
+    );
     updateTotal();
+  }
+
+  String updateDescripEgress(
+      int tipo, double factor, int supTypeItemInt, int value) {
+    String factorDescrip = '';
+    tipo == 1
+        ? factorDescrip = '''Por  $factor
+Por Valor 
+de la Hora''' // descripcion para ingresos
+        : supTypeItemInt == 1
+            ? factorDescrip = '$subTypeItem' // Descrip Egresos Fijos
+            : supTypeItemInt == 2
+                ? factorDescrip = '''$factor por
+los Ingresos 
+del ciclo: $sumIncome''' // descripcion Egresos Fraccion de Ingresos del ciclo
+                : factorDescrip = '''$factor por
+Ingresos 
+exedidos en: 
+$value '''; // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
+    return factorDescrip;
   }
 
   void updateValorUnit(int valorUnitario) {

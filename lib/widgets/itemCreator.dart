@@ -57,13 +57,14 @@ class _ItemCreatorState extends State<ItemCreator> {
                 ),
                 Center(
                   child: Text(
-                    widget.item.itemSubtypeInt == 1 
-                    ? 'Cantidad no variable'
-                    : widget.item.itemSubtypeInt == 2
-                      ? 'Fracción Ingresos del Ciclo'
-                      : widget.item.itemSubtypeInt == 3
-                      ?'Fracción de Ingresos Mensuales Exedidos':'Cantidad Variable'
-                    ),
+                    widget.item.itemType == 1 // si es un ingreso
+                      ? 'Cantidad Variable' // escriba esto
+                      : widget.item.itemSubtypeInt == 1 // si no es un ingreso y es subtype 1
+                        ? 'Cantidad no variable' // escriba esto
+                        : widget.item.itemSubtypeInt == 2 // o si es un subtype 2
+                          ? 'Fracción Ingresos del Ciclo' // escriba esto
+                          : 'Fracción de Ingresos Mensuales Exedidos' // y si es un Subtype 3 escriba esto otro                            
+                    )
                 )
               ],
             ),
@@ -86,18 +87,11 @@ class _ItemCreatorState extends State<ItemCreator> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                widget.item.itemType == -1 // Si es un egreso                 
-                  ?Text('')
-                  // ? widget.item.itemSubtypeInt == 1 // y tambien es Cantidad fija
-                  //   ? Text('') 
-                  //   : widget.item.itemSubtypeInt == 2 // si es un egreso por Fracción de ingresos de ciclo                  
-                  //       ? Text( '${Provider.of<ItemData>(context).sumIncome}',style: TextStyle(fontSize: 30.0)) // entonces dibuje un Text con la sumatoria de los ingresos    
-                  //       :  widget.item.itemSubtypeInt == 3 
-                  //          ? Text( '${Provider.of<ItemData>(context).sumIncome}',style: TextStyle(fontSize: 30.0))  
-                  //          : Text('')        
-                  : widget.item.itemSubtypeInt == 1
-                    ? Text( '${widget.item.value}',style: TextStyle(fontSize: 30.0))  
-                    :TextFieldItem(txtController: txtController, widget: widget), //si no es cantidad fija ni Fraccion de ingresos de ciclo devuelva un TextField                                          
+                widget.item.itemType == 1 // Si es un Ingreso                 
+                  ? Provider.of<ItemData>(context).ingresoFijoExist == false // Y si el ingeso fijo aun no exite
+                      ? Text( '${widget.item.value}',style: TextStyle(fontSize: 30.0)) // Dibuje un Text 
+                      :TextFieldItem(txtController: txtController, widget: widget) //si es un Item de ingreso y el ingreso fijo ya existe dibuje un TextField                                        
+                  : Text(''),// En cambio si es un Egreso no dibuje nada 
                 Text('${widget.item.middleItemDescrip}',style: TextStyle(fontSize: 15.0)),
                 Text("=", style: TextStyle(fontSize: 50.0)),
                 Text('${widget.item.total}', style: TextStyle(fontSize: 40.0))

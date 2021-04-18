@@ -7,6 +7,7 @@ import 'package:mi_pago/models/itemModel.dart';
 
 class AddItemScreen extends StatefulWidget {
   String tipo;
+  int itemType;
   int value = 0;
   double factor = 1.0;
   int subTypeItemInt = 1;
@@ -126,21 +127,21 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold)),
                 onPressed: () {
+                  ItemData providerData = Provider.of<ItemData>(context);
+                  // Se convierte el tipo de Item de String a su equivalente en int 
+                  widget.itemType = widget.tipo =='INGRESO' ? 1 : -1;
                   // Se traduce la opción seleccionada de opción tipo String a su valor equivalente en Entero
                   widget.subTypeItemInt = parseIntSubTypeItem(
-                      widget.subTypeItemList,
-                      Provider.of<ItemData>(context).subTypeItem);
-                  // se procede a crear el String que describe el factor del item llamando la funcion factorDescripCreator
-                  middleItemDescrip = miiddleItemDescrip(
-                      widget.tipo,
-                      Provider.of<ItemData>(context).subTypeItem,
+                      widget.subTypeItemList, providerData.subTypeItem);
+                  // se procede a crear el String que describe el factor del item llamando la funcion updateDescripEgress
+                  middleItemDescrip = providerData.updateDescripEgress(
+                      widget.itemType,
                       widget.factor,
                       widget.subTypeItemInt,
-                      Provider.of<ItemData>(context).sumIncome,
-                      widget.value);
+                      widget.value);                  
                   //Se procede a añadir el nuevo item con los datos listos, dependiendo del tipo de item Income o Egress
                   final newItem = ItemModel(
-                      itemType: widget.tipo == 'INGRESO' ? 1 : -1,
+                      itemType: widget.itemType,
                       itemSubtypeInt: widget.subTypeItemInt,
                       name: newNameItem,
                       factor: widget.factor,
@@ -154,9 +155,7 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                                   .value // entonces asigne el valor de 'value' al 'total'
                               : widget.subTypeItemInt ==
                                       2 // En cambio si es un Egreso y de Fraccion por ingreso del ciclo
-                                  ? (widget.factor *
-                                          Provider.of<ItemData>(context)
-                                              .sumIncome)
+                                  ? (widget.factor * providerData.sumIncome)
                                       .toInt() // asigne a 'total' el valor de la suma de los ingresos por el factor ingresado
                                   : widget.subTypeItemInt ==
                                           3 // Y si al final es un Egreso por Fracción de Ingresos Exedido de cierta cantidad
@@ -165,10 +164,9 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                           : 0 // si al final no es un Egreso sinó un Ingreso asigne el valor de 0 a 'total'
                       );
                   widget.tipo == 'EGRESO'
-                      ? Provider.of<ItemData>(context).addEgressItem(newItem)
-                      : Provider.of<ItemData>(context).addIncomeItem(newItem);
-                  Provider.of<ItemData>(context)
-                      .updateTotal(); //Actualizar total pago
+                      ? providerData.addEgressItem(newItem)
+                      : providerData.addIncomeItem(newItem);
+                  providerData.updateTotal(); //Actualizar total pago
                   Navigator.pop(context);
                 },
               ),
@@ -231,8 +229,11 @@ int parseIntSubTypeItem(List<String> subTypeItemList, String subTypeItemStr) {
 String miiddleItemDescrip(String tipo, String subTypeStr, double factor,
     int supTypeItemInt, int sumIncome, int value) {
   String factorDescrip = '';
-  tipo == 'EGRESO'
-      ? supTypeItemInt == 1
+  tipo == 'INGRESO'
+      ? factorDescrip = '''Por  $factor
+ Por Valor 
+ de la Hora''' // descripcion para ingresos
+      : supTypeItemInt == 1
           ? factorDescrip = '$subTypeStr' // Descrip Egresos Fijos
           : supTypeItemInt == 2
               ? factorDescrip = '''$factor por
@@ -241,8 +242,6 @@ del ciclo: $sumIncome''' // descripcion Egresos Fraccion de Ingresos del ciclo
               : factorDescrip = '''$factor por
 Ingresos 
 exedidos en: 
-$value ''' // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
-      : factorDescrip = '''Factor 
-$factor'''; // descripcion para ingresos
+$value '''; // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
   return factorDescrip;
 }
