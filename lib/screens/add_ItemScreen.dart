@@ -225,23 +225,3 @@ int parseIntSubTypeItem(List<String> subTypeItemList, String subTypeItemStr) {
           : subTypeItem = 3; //Fracción Ingresos mensuales Exedidos
   return subTypeItem;
 }
-
-String miiddleItemDescrip(String tipo, String subTypeStr, double factor,
-    int supTypeItemInt, int sumIncome, int value) {
-  String factorDescrip = '';
-  tipo == 'INGRESO'
-      ? factorDescrip = '''Por  $factor
- Por Valor 
- de la Hora''' // descripcion para ingresos
-      : supTypeItemInt == 1
-          ? factorDescrip = '$subTypeStr' // Descrip Egresos Fijos
-          : supTypeItemInt == 2
-              ? factorDescrip = '''$factor por
-los Ingresos 
-del ciclo: $sumIncome''' // descripcion Egresos Fraccion de Ingresos del ciclo
-              : factorDescrip = '''$factor por
-Ingresos 
-exedidos en: 
-$value '''; // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
-  return factorDescrip;
-}

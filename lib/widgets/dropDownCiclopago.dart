@@ -58,7 +58,8 @@ $newValue${'es'}''';
                     name: 'Ingreso Fijo',
                     factor: 1.0,
                     middleItemDescrip: descripFactor,
-                    itemSubtypeInt: 1 // Cantidad Fija
+                    itemSubtypeInt: 1, // Cantidad Fija
+                    fixIncome: true
                   );
                   providerData.indexIngFijo = providerData.incomeList.length;
                   providerData.ingresoFijoExist = true;

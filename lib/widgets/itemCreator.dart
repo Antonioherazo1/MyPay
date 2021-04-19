@@ -58,7 +58,9 @@ class _ItemCreatorState extends State<ItemCreator> {
                 Center(
                   child: Text(
                     widget.item.itemType == 1 // si es un ingreso
-                      ? 'Cantidad Variable' // escriba esto
+                      ? widget.item.fixIncome == true
+                        ? 'Cantidad no Variable'
+                        : 'Cantidad Variable' // escriba esto
                       : widget.item.itemSubtypeInt == 1 // si no es un ingreso y es subtype 1
                         ? 'Cantidad no variable' // escriba esto
                         : widget.item.itemSubtypeInt == 2 // o si es un subtype 2
@@ -87,10 +89,10 @@ class _ItemCreatorState extends State<ItemCreator> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                widget.item.itemType == 1 // Si es un Ingreso                 
-                  ? Provider.of<ItemData>(context).ingresoFijoExist == false // Y si el ingeso fijo aun no exite
-                      ? Text( '${widget.item.value}',style: TextStyle(fontSize: 30.0)) // Dibuje un Text 
-                      :TextFieldItem(txtController: txtController, widget: widget) //si es un Item de ingreso y el ingreso fijo ya existe dibuje un TextField                                        
+                widget.item.itemType == 1 // Si es un Ingreso 
+                  ? widget.item.fixIncome == true // Y si es el Ingreso Fijo 
+                    ? Text( '${widget.item.value}',style: TextStyle(fontSize: 30.0)) // Dibuje un Text 
+                    :TextFieldItem(txtController: txtController, widget: widget) //si es un Item de ingreso y el ingreso fijo ya existe dibuje un TextField                                        
                   : Text(''),// En cambio si es un Egreso no dibuje nada 
                 Text('${widget.item.middleItemDescrip}',style: TextStyle(fontSize: 15.0)),
                 Text("=", style: TextStyle(fontSize: 50.0)),

@@ -66,9 +66,8 @@ de la Hora''' // descripcion para ingresos
 los Ingresos 
 del ciclo: $sumIncome''' // descripcion Egresos Fraccion de Ingresos del ciclo
                 : factorDescrip = '''$factor por
-Ingresos 
-exedidos en: 
-$value '''; // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
+Ingresos Mensuales
+exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
     return factorDescrip;
   }
 
