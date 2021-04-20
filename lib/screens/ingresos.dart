@@ -36,8 +36,10 @@ class _IngresosState extends State<Ingresos> {
           ),
           automaticallyImplyLeading: false),
       body: Container(
-        child: Column(
-          children: [ItemList(income: true), AddNewItemButtom(tipo: 'INGRESO')],
+        child: SingleChildScrollView(
+                  child: Column(
+            children: [ItemList(income: true), AddNewItemButtom(tipo: 'INGRESO')],
+          ),
         ),
       ),
     );

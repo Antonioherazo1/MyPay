@@ -21,6 +21,7 @@ class HomeScreem extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
+          resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             title: Text(
               'Home',

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mi_pago/models/itemModel.dart';
-import 'package:provider/provider.dart';
-import 'package:mi_pago/models/itemData.dart';
 
 class ItemCreator extends StatefulWidget {
   final ItemModel item;

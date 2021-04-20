@@ -22,63 +22,87 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
       body: Container(
         padding: EdgeInsets.all(30.0),
         // Main Container
-        child: Container(
-          // Son Container
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-                child: Text('Ingresos',
-                    style: TextStyle(fontSize: 20.0, fontFamily: 'Dalgona')),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 0.0),
+                    child: Text('Ingresos',
+                        style:
+                            TextStyle(fontSize: 20.0, fontFamily: 'Dalgona')),
+                  ),
+                  ConstrainedBox(
+                    constraints:
+                        BoxConstraints(maxHeight: 200, minHeight: 56.0),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount:
+                            Provider.of<ItemData>(context).incomeList.length,
+                        itemBuilder: (context, index) {
+                          return BalanceITEM(
+                              name: Provider.of<ItemData>(context)
+                                  .incomeList[index]
+                                  .name,
+                              value: Provider.of<ItemData>(context)
+                                  .incomeList[index]
+                                  .total,
+                              titleBold: false);
+                        }),
+                  ),
+                  BalanceITEM(
+                      name: 'Total Ingresos: ',
+                      value: Provider.of<ItemData>(context).sumIncome,
+                      titleBold: true),
+                  // Container of the list of widgets with the information of Income and Egress
+                  Divider(height: 20.0, thickness: 5.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 0.0),
+                    child: Text('Egresos',
+                        style:
+                            TextStyle(fontSize: 20.0, fontFamily: 'Dalgona')),
+                  ),
+                  ConstrainedBox(
+                    constraints:
+                        BoxConstraints(maxHeight: 200, minHeight: 56.0),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount:
+                            Provider.of<ItemData>(context).egressList.length,
+                        itemBuilder: (context, index) {
+                          return BalanceITEM(
+                            name: Provider.of<ItemData>(context)
+                                .egressList[index]
+                                .name,
+                            value: Provider.of<ItemData>(context)
+                                .egressList[index]
+                                .total,
+                            titleBold: false,
+                          );
+                        }),
+                  ),
+                  BalanceITEM(
+                    name: 'Total Egresos: ',
+                    value: Provider.of<ItemData>(context).sumEgress,
+                    titleBold: true,
+                  ),
+                ],
               ),
-              ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: 200, minHeight: 56.0),
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: Provider.of<ItemData>(context).incomeList.length,
-                    itemBuilder: (context, index) {
-                      return BalanceITEM(
-                          name: Provider.of<ItemData>(context)
-                              .incomeList[index]
-                              .name,
-                          value: Provider.of<ItemData>(context)
-                              .incomeList[index]
-                              .total);
-                    }),
-              ),
-              BalanceITEM(
-                  name: 'Total Ingresos: ',
-                  value: Provider.of<ItemData>(context).sumIncome),
-              // Container of the list of widgets with the information of Income and Egress
-              Divider(height: 20.0, thickness: 5.0),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-                child: Text('Egresos',
-                    style: TextStyle(fontSize: 20.0, fontFamily: 'Dalgona')),
-              ),
-              ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: 200, minHeight: 56.0),
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: Provider.of<ItemData>(context).egressList.length,
-                    itemBuilder: (context, index) {
-                      return BalanceITEM(
-                          name: Provider.of<ItemData>(context)
-                              .egressList[index]
-                              .name,
-                          value: Provider.of<ItemData>(context)
-                              .egressList[index]
-                              .total);
-                    }),
-              ),
-              BalanceITEM(
-                  name: 'Total Egresos: ',
-                  value: Provider.of<ItemData>(context).sumEgress),
-            ],
-          ),
+            ),
+            RaisedButton(
+                padding: EdgeInsets.all(30.0),
+                child: Text('Guardar valores del Ciclo',
+                    style: TextStyle(color: Colors.white70, fontSize: 26.0)),
+                color: Colors.blue,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                onPressed: () {})
+          ],
         ),
       ),
     );
@@ -88,7 +112,8 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
 class BalanceITEM extends StatelessWidget {
   String name;
   int value;
-  BalanceITEM({this.name, this.value});
+  bool titleBold = false;
+  BalanceITEM({this.name, this.value, this.titleBold});
 
   @override
   Widget build(BuildContext context) {
@@ -96,14 +121,23 @@ class BalanceITEM extends StatelessWidget {
       padding: EdgeInsets.all(5.0),
       width: 350.0,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[300], width: 2.0)),
+          gradient: LinearGradient(
+              begin: Alignment.center,
+              end: Alignment.bottomCenter,
+              colors: <Color>[Colors.yellow[50], Colors.yellow[200]]),
+          border: Border.all(
+            color: Colors.yellow[800],
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(5.0)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            '$name : ',
-            style: TextStyle(fontSize: 20.0, fontFamily: 'Roboto'),
-          ),
+          Text('$name : ',
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontFamily: 'Roboto',
+                  fontWeight: titleBold ? FontWeight.bold : null)),
           Text('$value', style: TextStyle(fontSize: 20.0))
         ],
       ),

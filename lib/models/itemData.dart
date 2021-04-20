@@ -1,4 +1,4 @@
-// import 'package:flutter/cupertino.dart';
+import 'package:mi_pago/models/cicloDataModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mi_pago/models/itemModel.dart';
@@ -17,6 +17,8 @@ class ItemData extends ChangeNotifier {
 
   List<ItemModel> incomeList = [];
   List<ItemModel> egressList = [];
+  List<CicloDataModel> ciclosDataList = [];
+  
 
   void addIncomeItem(ItemModel newItem) {
     incomeList.add(newItem); // Se añade el nuevo item a Egresos
@@ -45,8 +47,8 @@ class ItemData extends ChangeNotifier {
                 : egressItem.total = egressItem.value;
 
         // Actulizamos las decripciones de cada ITEM de Egress
-        egressItem.middleItemDescrip = updateDescripEgress(egressItem.itemType, egressItem.factor,
-            egressItem.itemSubtypeInt, egressItem.value);
+        egressItem.middleItemDescrip = updateDescripEgress(egressItem.itemType,
+            egressItem.factor, egressItem.itemSubtypeInt, egressItem.value);
       },
     );
     updateTotal();

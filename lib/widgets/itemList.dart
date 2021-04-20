@@ -21,9 +21,10 @@ class ItemList extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Totalizador(total: itemData.totalizador),
               ),
-              Container(
-                  height: 450.0,
-                  margin: EdgeInsets.all(10.0),
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight:450, minHeight: 56.0),
+                  // height: 450.0,
+                  // margin: EdgeInsets.all(10.0),
                   child: ListView.builder(
                       itemCount: income ? itemData.incomeList.length: itemData.egressList.length ,
                       itemBuilder: (context, index) {
