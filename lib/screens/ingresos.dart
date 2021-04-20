@@ -35,13 +35,11 @@ class _IngresosState extends State<Ingresos> {
             style: TextStyle(fontFamily: 'Dalgona'),
           ),
           automaticallyImplyLeading: false),
-      body: Container(
-        child: SingleChildScrollView(
-                  child: Column(
+      body: SingleChildScrollView(
+          child: Column(
             children: [ItemList(income: true), AddNewItemButtom(tipo: 'INGRESO')],
           ),
         ),
-      ),
     );
   }
 }

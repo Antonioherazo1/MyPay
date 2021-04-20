@@ -27,7 +27,7 @@ class ItemList extends StatelessWidget {
                   // margin: EdgeInsets.all(10.0),
                   child: ListView.builder(
                       itemCount: income ? itemData.incomeList.length: itemData.egressList.length ,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, index){
                         return income ? 
                         ItemCreator(initValue: '${itemData.incomeList[index].value}',
                               item:itemData.incomeList[index], 

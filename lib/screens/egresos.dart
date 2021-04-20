@@ -20,7 +20,7 @@ class _EgresosState extends State<Egresos> {
         ),
         automaticallyImplyLeading: false,
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             ItemList(income: false), 

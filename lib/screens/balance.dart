@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_pago/widgets/totalizador.dart';
 import 'package:provider/provider.dart';
 import 'package:mi_pago/models/itemData.dart';
 
@@ -8,8 +9,6 @@ class BalanceGeneral extends StatefulWidget {
 }
 
 class _BalanceGeneralState extends State<BalanceGeneral> {
-  List<String> names = ['name1', 'name2', 'name3'];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,9 +18,9 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
             style: TextStyle(fontFamily: 'Dalgona'),
           ),
           automaticallyImplyLeading: false),
-      body: Container(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(30.0),
-        // Main Container
+        //-------Main Container------
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -29,6 +28,9 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Totalizador(
+                    total: Provider.of<ItemData>(context).totalizador,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 15.0, horizontal: 0.0),
@@ -36,6 +38,7 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
                         style:
                             TextStyle(fontSize: 20.0, fontFamily: 'Dalgona')),
                   ),
+                  //------- ListBuilder ------
                   ConstrainedBox(
                     constraints:
                         BoxConstraints(maxHeight: 200, minHeight: 56.0),
@@ -67,6 +70,7 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
                         style:
                             TextStyle(fontSize: 20.0, fontFamily: 'Dalgona')),
                   ),
+                  //------- ListBuilder ------
                   ConstrainedBox(
                     constraints:
                         BoxConstraints(maxHeight: 200, minHeight: 56.0),
@@ -94,14 +98,39 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
                 ],
               ),
             ),
-            RaisedButton(
-                padding: EdgeInsets.all(30.0),
-                child: Text('Guardar valores del Ciclo',
-                    style: TextStyle(color: Colors.white70, fontSize: 26.0)),
-                color: Colors.blue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                onPressed: () {})
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Container(
+                child: RaisedButton(
+                    // padding: EdgeInsets.all(30.0),
+                    child: Text('Guardar valores del Ciclo',
+                        style:
+                            TextStyle(color: Colors.white70, fontSize: 24.0)),
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: Text('Se va a guadar El ciclo de Pago'),
+                                content: Text('Confirma ?'),
+                                actions: [
+                                  FlatButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Aceptar')),
+                                  FlatButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancelar'))
+                                ],
+                              ));
+                    }),
+              ),
+            )
           ],
         ),
       ),
