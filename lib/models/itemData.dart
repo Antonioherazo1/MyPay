@@ -2,6 +2,7 @@ import 'package:mi_pago/models/cicloDataModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mi_pago/models/itemModel.dart';
+import 'package:intl/intl.dart';
 
 class ItemData extends ChangeNotifier {
   int horasLaboralesDiarias = 8;
@@ -18,7 +19,7 @@ class ItemData extends ChangeNotifier {
   List<ItemModel> incomeList = [];
   List<ItemModel> egressList = [];
   List<CicloDataModel> ciclosDataList = [];
-  
+  List<List<CicloDataModel>> mesDataList = [];
 
   void addIncomeItem(ItemModel newItem) {
     incomeList.add(newItem); // Se añade el nuevo item a Egresos
@@ -30,12 +31,15 @@ class ItemData extends ChangeNotifier {
     notifyListeners(); //se notifican los Consumidores del provider
   }
 
-  void updateItem(ItemModel item, String value) {
-    double factor = item.factor;
-    int valueInt = int.parse(value);
+  void updateItem() {
     //Actualizamos Intem de ingresos
-    item.value = valueInt;
-    item.total = (valueInt * factor * valorUnitario).toInt();
+    incomeList.forEach((item) {
+      item.total = (item.value * item.factor * valorUnitario).toInt();
+    });
+
+    // item.value = valueInt;
+    // item.total = (valueInt * factor * valorUnitario).toInt();
+
     updateTotal();
     //Actualizar todos Item de egresos
     egressList.forEach(
@@ -93,12 +97,30 @@ exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales e
     incomeList.forEach((income) {
       sumIncome += income.total;
     });
-    print('sumincome: $sumIncome');
     egressList.forEach((egress) {
       sumEgress += egress.total;
     });
-    print('SumEgress: $sumEgress');
     totalizador = sumIncome - sumEgress;
     notifyListeners();
+  }
+
+  void saveCiclo() {
+    int a;
+    var now = new DateTime.now();
+    var formatter = new DateFormat('dd-MM-yyyy');
+    String dateNow = formatter.format(now);
+    final cicleData = CicloDataModel(
+        incomeList: incomeList,
+        egressList: egressList,
+        date: now,
+        dateString: dateNow,
+        total: totalizador);
+    ciclosDataList.add(cicleData);
+    incomeList.forEach((item) {
+      item.fixIncome == false ? item.value = 0 : print('');
+      // ? print('false: ${item.name}')
+      // : print(' length: ${this.ciclosDataList.length} true: ${item.name}');
+    });
+    updateItem();
   }
 }

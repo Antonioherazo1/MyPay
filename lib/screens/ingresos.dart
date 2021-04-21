@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_pago/widgets/addNewItemButtom.dart';
 import 'package:mi_pago/widgets/itemList.dart';
-import 'package:provider/provider.dart';
-import 'package:mi_pago/models/itemData.dart';
 import 'package:mi_pago/models/itemModel.dart';
-import 'package:after_init/after_init.dart';
 
 class Ingresos extends StatefulWidget {
   List<ItemModel> incomeList;

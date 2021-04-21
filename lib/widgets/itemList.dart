@@ -13,7 +13,6 @@ class ItemList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ItemData>(
       builder: (context, itemData, child) {
-        
         return Center(
           child: Column(
             children: [
@@ -22,26 +21,29 @@ class ItemList extends StatelessWidget {
                 child: Totalizador(total: itemData.totalizador),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(maxHeight:450, minHeight: 56.0),
+                  constraints: BoxConstraints(maxHeight: 450, minHeight: 56.0),
                   // height: 450.0,
                   // margin: EdgeInsets.all(10.0),
                   child: ListView.builder(
-                      itemCount: income ? itemData.incomeList.length: itemData.egressList.length ,
-                      itemBuilder: (context, index){
-                        return income ? 
-                        ItemCreator(initValue: '${itemData.incomeList[index].value}',
-                              item:itemData.incomeList[index], 
-                              textFieldCallback: (newValue) {
-                                itemData.updateItem(itemData.incomeList[index], newValue);                                  
-                              }) 
-                      : ItemCreator(initValue: '${itemData.egressList[index].value}',
-                              item:itemData.egressList[index], 
-                              textFieldCallback: (newValue) {
-                                itemData.updateItem(itemData.egressList[index], newValue);                                  
-                              });
-                        
+                      itemCount: income
+                          ? itemData.incomeList.length
+                          : itemData.egressList.length,
+                      itemBuilder: (context, index) {
+                        return
+                            income ?
+                            ItemCreator(
+                                initValue:
+                                    '${itemData.incomeList[index].value}',
+                                item: itemData.incomeList[index],
+                                textFieldCallback: (newValue) {
+                                  itemData.incomeList[index].value = int.parse(newValue) ;
+                                  itemData.updateItem();
+                                  // itemData.updateItem(itemData.incomeList[index], newValue);
+                                })
+                        : ItemCreator(initValue: '${itemData.egressList[index].value}',
+                                item:itemData.egressList[index],
+                                textFieldCallback: () {});
                       })),
-              
             ],
           ),
         );

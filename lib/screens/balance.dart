@@ -33,10 +33,10 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 15.0, horizontal: 0.0),
-                    child: Text('Ingresos',
-                        style:
-                            TextStyle(fontSize: 20.0, fontFamily: 'Dalgona')),
+                        vertical: 5.0, horizontal: 0.0),
+                    child: Text('Ingresos'.toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.bold)),
                   ),
                   //------- ListBuilder ------
                   ConstrainedBox(
@@ -62,13 +62,13 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
                       value: Provider.of<ItemData>(context).sumIncome,
                       titleBold: true),
                   // Container of the list of widgets with the information of Income and Egress
-                  Divider(height: 20.0, thickness: 5.0),
+                  Divider(height: 15.0, thickness: 5.0),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 15.0, horizontal: 0.0),
-                    child: Text('Egresos',
-                        style:
-                            TextStyle(fontSize: 20.0, fontFamily: 'Dalgona')),
+                        vertical: 5.0, horizontal: 0.0),
+                    child: Text('Egresos'.toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.bold)),
                   ),
                   //------- ListBuilder ------
                   ConstrainedBox(
@@ -99,11 +99,14 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 20.0),
               child: Container(
+                width: double.infinity,
+                height: 60.0,
                 child: RaisedButton(
                     // padding: EdgeInsets.all(30.0),
                     child: Text('Guardar valores del Ciclo',
+                        textAlign: TextAlign.center,
                         style:
                             TextStyle(color: Colors.white70, fontSize: 24.0)),
                     color: Colors.blue,
@@ -113,19 +116,44 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
                       showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                                title: Text('Se va a guadar El ciclo de Pago'),
-                                content: Text('Confirma ?'),
+                                title: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: ' Se va a Guardar el ',
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 22.0),
+                                      ),
+                                      TextSpan(
+                                        text: ' Ciclo de Pago'.toUpperCase(),
+                                        style: TextStyle(
+                                            color: Colors.blue[300],
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 26.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                content: Text(
+                                  'Confirma ?',
+                                  style: TextStyle(color: Colors.black54),
+                                ),
                                 actions: [
                                   FlatButton(
                                       onPressed: () {
+                                        Provider.of<ItemData>(context)
+                                            .saveCiclo();
                                         Navigator.of(context).pop();
                                       },
-                                      child: Text('Aceptar')),
+                                      child: Text('Aceptar',
+                                          style: TextStyle(fontSize: 25.0))),
                                   FlatButton(
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      child: Text('Cancelar'))
+                                      child: Text('Cancelar',
+                                          style: TextStyle(fontSize: 25.0)))
                                 ],
                               ));
                     }),

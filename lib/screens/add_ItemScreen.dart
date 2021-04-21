@@ -147,6 +147,7 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                       factor: widget.factor,
                       middleItemDescrip: middleItemDescrip,
                       value: widget.value,
+                      fixIncome: false,
                       total: widget.tipo ==
                               'EGRESO' // si el item es de tipo Egreso
                           ? widget.subTypeItemInt ==

@@ -54,26 +54,31 @@ $newValue${'es'}''';
                 valueChoosen = newValue;
                 if (providerData.ingresoFijoExist == false) {
                   final fixIncome = ItemModel(
-                    itemType: 1, //Ingreso
-                    name: 'Ingreso Fijo',
-                    factor: 1.0,
-                    middleItemDescrip: descripFactor,
-                    itemSubtypeInt: 1, // Cantidad Fija
-                    fixIncome: true
-                  );
+                      itemType: 1, //Ingreso
+                      name: 'Ingreso Fijo',
+                      value: providerData.cicloPago,
+                      factor: 1.0,
+                      middleItemDescrip: descripFactor,
+                      itemSubtypeInt: 1, // Cantidad Fija
+                      fixIncome: true);
                   providerData.indexIngFijo = providerData.incomeList.length;
                   providerData.ingresoFijoExist = true;
                   providerData.incomeList.add(fixIncome);
                 } else {
                   int index = providerData.indexIngFijo;
-                  providerData.incomeList[index].middleItemDescrip = descripFactor;
-                  providerData.updateItem(providerData.incomeList[index],
-                      providerData.incomeList[index].value.toString());
+                  providerData.incomeList[index].value = providerData.cicloPago;
+                  providerData.incomeList[index].middleItemDescrip =
+                      descripFactor;
+                  providerData.updateItem(
+                      // providerData.incomeList[index],
+                      //   providerData.incomeList[index].value.toString()
+                      );
                 }
                 // Incvocamos la funcion upDateItem de Provider para actualizar cambio de cicloPago
                 providerData.updateItem(
-                    providerData.incomeList[0],
-                    providerData.cicloPago.toString());
+                    // providerData.incomeList[0],
+                    // providerData.cicloPago.toString()
+                    );
                 providerData.updateTotal();
               });
             },
