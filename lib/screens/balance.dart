@@ -119,111 +119,84 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
                     //--- ventana Emergente GUARDAR CICLO PAGO----
                     showDialog(
                         context: context,
-                        builder: (context) => AlertDialog(
-                              title: RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: ' Se va a Guardar el \n',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 22.0),
-                                    ),
-                                    TextSpan(
-                                      text: ' Ciclo de Pago'.toUpperCase(),
-                                      style: TextStyle(
-                                          color: Colors.blue[300],
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 26.0),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              content: Text(
-                                'Confirma ?',
-                                style: TextStyle(
-                                    color: Colors.black54, fontSize: 26.0),
-                              ),
-                              actions: [
-                                FlatButton(
-                                    onPressed: () {
-                                      Provider.of<ItemData>(context)
-                                          .saveCiclo();
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Aceptar',
-                                        style: TextStyle(fontSize: 25.0))),
-                                FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Cancelar',
-                                        style: TextStyle(fontSize: 25.0)))
-                              ],
-                            ));
+                        builder: (context) => AlertDialogConfirmation(
+                            alertName: 'ciclo de pago'));
                   }),
             ),
             Container(
               padding: EdgeInsets.only(top: 20.0),
               width: double.infinity,
               height: 60.0,
-              child: RaisedButton(                  
+              child: RaisedButton(
                   child: Text('Guadar Datos Mes ',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white70, fontSize: 24.0)),
                   color: Colors.green[400],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0)),
-                  onPressed: (){
-                     //--- ventana Emergente GUARDAR DATOS MES----
+                  onPressed: () {
+                    //--- ventana Emergente GUARDAR DATOS MES----
                     showDialog(
                         context: context,
-                        builder: (context) => AlertDialog(
-                              title: RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: ' Se va a Guardar el \n',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 22.0),
-                                    ),
-                                    TextSpan(
-                                      text: 'mes'.toUpperCase(),
-                                      style: TextStyle(
-                                          color: Colors.blue[300],
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 26.0),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              content: Text(
-                                'Confirma ?',
-                                style: TextStyle(
-                                    color: Colors.black54, fontSize: 26.0),
-                              ),
-                              actions: [
-                                FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Aceptar',
-                                        style: TextStyle(fontSize: 25.0))),
-                                FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Cancelar',
-                                        style: TextStyle(fontSize: 25.0)))
-                              ],
-                            ));
+                        builder: (context) => AlertDialogConfirmation(alertName: 'mes',));
                   }),
             ),
             
           ],
         ),
       ),
+    );
+  }
+}
+
+class AlertDialogConfirmation extends StatelessWidget {
+  String alertName;
+  Function function;
+
+  AlertDialogConfirmation({this.alertName, this.function});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: ' Se va a Guardar el \n',
+              style: TextStyle(color: Colors.black54, fontSize: 22.0),
+            ),
+            TextSpan(
+              text: ' $alertName'.toUpperCase(),
+              style: TextStyle(
+                  color: Colors.blue[300],
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26.0),
+            ),
+          ],
+        ),
+      ),
+      content: Text(
+        'Confirma ?',
+        style: TextStyle(color: Colors.black54, fontSize: 26.0),
+      ),
+      actions: [
+        FlatButton(
+            onPressed: () {
+              alertName == 'ciclo de pago'
+                  ? Provider.of<ItemData>(context).saveCiclo()
+                  : alertName == 'mes'
+                      ? Provider.of<ItemData>(context).saveMes()
+                      // ignore: unnecessary_statements
+                      : null;
+              Navigator.of(context).pop();
+            },
+            child: Text('Aceptar', style: TextStyle(fontSize: 25.0))),
+        FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancelar', style: TextStyle(fontSize: 25.0)))
+      ],
     );
   }
 }
@@ -264,12 +237,3 @@ class BalanceITEM extends StatelessWidget {
   }
 }
 
-class PopUpWindowConfirmation extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
-      
-    );
-  }
-}

@@ -22,26 +22,25 @@ class ItemList extends StatelessWidget {
               ),
               ConstrainedBox(
                   constraints: BoxConstraints(maxHeight: 450, minHeight: 56.0),
-                  // height: 450.0,
-                  // margin: EdgeInsets.all(10.0),
                   child: ListView.builder(
                       itemCount: income
                           ? itemData.incomeList.length
                           : itemData.egressList.length,
                       itemBuilder: (context, index) {
-                        return
-                            income ?
-                            ItemCreator(
+                        return income
+                            ? ItemCreator(
                                 initValue:
-                                    '${itemData.incomeList[index].value}',
+                                    '${itemData.incomeList[index].values}',
                                 item: itemData.incomeList[index],
                                 textFieldCallback: (newValue) {
-                                  itemData.incomeList[index].value = int.parse(newValue) ;
-                                  itemData.updateItem();
-                                  // itemData.updateItem(itemData.incomeList[index], newValue);
+                                  itemData.incomeList[index].values =
+                                      int.parse(newValue);
+                                  itemData.updateItem();                                  
                                 })
-                        : ItemCreator(initValue: '${itemData.egressList[index].value}',
-                                item:itemData.egressList[index],
+                            : ItemCreator(
+                                initValue:
+                                    '${itemData.egressList[index].values}',
+                                item: itemData.egressList[index],
                                 textFieldCallback: () {});
                       })),
             ],

@@ -90,7 +90,7 @@ class _ItemCreatorState extends State<ItemCreator> {
               children: [
                 widget.item.itemType == 1 // Si es un Ingreso 
                   ? widget.item.fixIncome == true // Y si es el Ingreso Fijo 
-                    ? Text( '${widget.item.value}',style: TextStyle(fontSize: 30.0)) // Dibuje un Text 
+                    ? Text( '${widget.item.values}',style: TextStyle(fontSize: 30.0)) // Dibuje un Text 
                     :TextFieldItem(txtController: txtController, widget: widget) //si es un Item de ingreso y el ingreso fijo ya existe dibuje un TextField                                        
                   : Text(''),// En cambio si es un Egreso no dibuje nada 
                 Text('${widget.item.middleItemDescrip}',style: TextStyle(fontSize: 15.0)),

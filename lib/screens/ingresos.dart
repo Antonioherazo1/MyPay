@@ -16,13 +16,6 @@ class _IngresosState extends State<Ingresos> {
   int valueUnitar = 0;
   
 
-  void didChangeDependencies() {
-    // widget.incomeList = Provider.of<ItemData>(context)
-    //     .incomeList
-    //     .where((item) => item.itemType > 0)
-    //     .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -56,7 +56,7 @@ $newValue${'es'}''';
                   final fixIncome = ItemModel(
                       itemType: 1, //Ingreso
                       name: 'Ingreso Fijo',
-                      value: providerData.cicloPago,
+                      values: providerData.cicloPago,
                       factor: 1.0,
                       middleItemDescrip: descripFactor,
                       itemSubtypeInt: 1, // Cantidad Fija
@@ -66,19 +66,13 @@ $newValue${'es'}''';
                   providerData.incomeList.add(fixIncome);
                 } else {
                   int index = providerData.indexIngFijo;
-                  providerData.incomeList[index].value = providerData.cicloPago;
+                  providerData.incomeList[index].values = providerData.cicloPago;
                   providerData.incomeList[index].middleItemDescrip =
                       descripFactor;
-                  providerData.updateItem(
-                      // providerData.incomeList[index],
-                      //   providerData.incomeList[index].value.toString()
-                      );
+                  providerData.updateItem();
                 }
                 // Incvocamos la funcion upDateItem de Provider para actualizar cambio de cicloPago
-                providerData.updateItem(
-                    // providerData.incomeList[0],
-                    // providerData.cicloPago.toString()
-                    );
+                providerData.updateItem();
                 providerData.updateTotal();
               });
             },

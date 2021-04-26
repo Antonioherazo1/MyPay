@@ -4,6 +4,7 @@ import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
 import 'package:mi_pago/widgets/droppDownSubTypeItem.dart';
 import 'package:mi_pago/models/itemModel.dart';
+import 'dart:convert';
 
 class AddItemScreen extends StatefulWidget {
   String tipo;
@@ -128,8 +129,8 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                         fontWeight: FontWeight.bold)),
                 onPressed: () {
                   ItemData providerData = Provider.of<ItemData>(context);
-                  // Se convierte el tipo de Item de String a su equivalente en int 
-                  widget.itemType = widget.tipo =='INGRESO' ? 1 : -1;
+                  // Se convierte el tipo de Item de String a su equivalente en int
+                  widget.itemType = widget.tipo == 'INGRESO' ? 1 : -1;
                   // Se traduce la opción seleccionada de opción tipo String a su valor equivalente en Entero
                   widget.subTypeItemInt = parseIntSubTypeItem(
                       widget.subTypeItemList, providerData.subTypeItem);
@@ -138,15 +139,15 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                       widget.itemType,
                       widget.factor,
                       widget.subTypeItemInt,
-                      widget.value);                  
+                      widget.value);
                   //Se procede a añadir el nuevo item con los datos listos, dependiendo del tipo de item Income o Egress
-                  final newItem = ItemModel(
+                  ItemModel newItem = ItemModel(
                       itemType: widget.itemType,
                       itemSubtypeInt: widget.subTypeItemInt,
                       name: newNameItem,
                       factor: widget.factor,
                       middleItemDescrip: middleItemDescrip,
-                      value: widget.value,
+                      values: widget.value,
                       fixIncome: false,
                       total: widget.tipo ==
                               'EGRESO' // si el item es de tipo Egreso
@@ -164,6 +165,9 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                                       : 0 // TO_DO
                           : 0 // si al final no es un Egreso sinó un Ingreso asigne el valor de 0 a 'total'
                       );
+                  String jsonNewUser = jsonEncode(newItem);
+                  print('$jsonNewUser');
+
                   widget.tipo == 'EGRESO'
                       ? providerData.addEgressItem(newItem)
                       : providerData.addIncomeItem(newItem);
