@@ -9,7 +9,7 @@ class DroppDownCiclopago extends StatefulWidget {
 }
 
 class _DroppDownCiclopagoState extends State<DroppDownCiclopago> {
-  final List<String> cicloDePagoList = ['Semanal', 'Quincenal', 'Mensual'];
+  final List<String> frecDePagoList = ['Semanal', 'Quincenal', 'Mensual'];
 
   String valueChoosen;
 
@@ -29,51 +29,49 @@ class _DroppDownCiclopagoState extends State<DroppDownCiclopago> {
             //---------------------
             value: valueChoosen,
             //---------------------
-            items: cicloDePagoList.map((valueItem) {
+            items: frecDePagoList.map((valueItem) {
               return DropdownMenuItem(
                 value: valueItem,
                 child: Container(
                   width: 100.0,
-                  child: Text(valueItem),
+                  child: Text('$valueItem'),
                 ),
               );
             }).toList(),
             //---------------------
             onChanged: (newValue) {
-              String descripFactor = '''Horas
-$newValue${'es'}''';
-
+              ItemData provider = Provider.of<ItemData>(context);
+              String descripFactor = 'Horas\n$newValue${'es'}';
+              provider.frecPago = newValue;
               setState(() {
-                ItemData providerData = Provider.of<ItemData>(context);
                 newValue == 'Semanal'
-                    ? providerData.cicloPago = 56
+                    ? provider.horasPorCiclo = 56
                     : newValue == 'Quincenal'
-                        ? providerData.cicloPago = 112
-                        : providerData.cicloPago = 224;
+                        ? provider.horasPorCiclo = 112
+                        : provider.horasPorCiclo = 224;
                 //---------
                 valueChoosen = newValue;
-                if (providerData.ingresoFijoExist == false) {
+                if (provider.ingresoFijoExist == false) {
                   final fixIncome = ItemModel(
                       itemType: 1, //Ingreso
                       name: 'Ingreso Fijo',
-                      values: providerData.cicloPago,
+                      values: provider.horasPorCiclo,
                       factor: 1.0,
                       middleItemDescrip: descripFactor,
                       itemSubtypeInt: 1, // Cantidad Fija
                       fixIncome: true);
-                  providerData.indexIngFijo = providerData.incomeList.length;
-                  providerData.ingresoFijoExist = true;
-                  providerData.incomeList.add(fixIncome);
+                  provider.indexIngFijo = provider.incomeList.length;
+                  provider.ingresoFijoExist = true;
+                  provider.incomeList.add(fixIncome);
                 } else {
-                  int index = providerData.indexIngFijo;
-                  providerData.incomeList[index].values = providerData.cicloPago;
-                  providerData.incomeList[index].middleItemDescrip =
-                      descripFactor;
-                  providerData.updateItem();
+                  int index = provider.indexIngFijo;
+                  provider.incomeList[index].values = provider.horasPorCiclo;
+                  provider.incomeList[index].middleItemDescrip = descripFactor;
+                  provider.updateItem();
                 }
                 // Incvocamos la funcion upDateItem de Provider para actualizar cambio de cicloPago
-                providerData.updateItem();
-                providerData.updateTotal();
+                provider.updateItem();
+                provider.updateTotal();
               });
             },
             //---------------------

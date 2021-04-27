@@ -11,11 +11,8 @@ class DroppDownSubTypeItem extends StatefulWidget {
 class _DroppDownSubTypeItemState extends State<DroppDownSubTypeItem> {
   List<String> subTypeItem = [
     'Cantidad Fija',
-    '''Fracción Ingresos 
-del ciclo''',
-    '''Fracción Ingresos 
-mensuales Exedidos'''
-  ];
+    'Fracción Ingresos\ndel ciclo',
+    'Fracción Ingresos\nmensuales Exedidos'];
 
   String valueChoosen;
 
@@ -26,8 +23,7 @@ mensuales Exedidos'''
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '''TIPO 
-EGRESO:''',
+            '''TIPO\nEGRESO:''',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),

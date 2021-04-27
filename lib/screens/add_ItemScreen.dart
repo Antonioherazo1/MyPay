@@ -14,10 +14,8 @@ class AddItemScreen extends StatefulWidget {
   int subTypeItemInt = 1;
   List<String> subTypeItemList = [
     'Cantidad Fija',
-    '''Fracción Ingresos 
-del ciclo''',
-    '''Fracción Ingresos 
-mensuales Exedidos'''
+    'Fracción Ingresos\ndel ciclo',
+    'Fracción Ingresos\nmensuales Exedidos'
   ];
 
   AddItemScreen({this.tipo});
@@ -108,8 +106,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
                                           title: 'FACTOR',
                                           widget: widget,
                                           destinoValue: 'factor'),
-                                      TFieldNum(title: '''VALOR 
-EXEDIDO''', widget: widget, destinoValue: 'value')
+                                      TFieldNum(title: 'VALOR\nEXEDIDO', widget: widget, destinoValue: 'value')
                                     ],
                                   ) // Y si es de Fraccion de Ingresos exedidos dibuje estos dos TextField de VALOR y FACTOR
                       ],
@@ -165,8 +162,6 @@ EXEDIDO''', widget: widget, destinoValue: 'value')
                                       : 0 // TO_DO
                           : 0 // si al final no es un Egreso sinó un Ingreso asigne el valor de 0 a 'total'
                       );
-                  String jsonNewUser = jsonEncode(newItem);
-                  print('$jsonNewUser');
 
                   widget.tipo == 'EGRESO'
                       ? providerData.addEgressItem(newItem)

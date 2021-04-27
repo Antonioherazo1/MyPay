@@ -9,6 +9,7 @@ import 'package:mi_pago/widgets/valor_unitario.dart';
 import 'package:provider/provider.dart';
 import 'package:mi_pago/models/itemData.dart';
 import 'package:mi_pago/widgets/dropDownCiclopago.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class HomeScreem extends StatelessWidget {
 
@@ -28,7 +29,7 @@ class HomeScreem extends StatelessWidget {
               style: TextStyle(fontFamily: 'Dalgona'),
             ),
           ),
-          drawer: SideMenu(),
+          // drawer: SideMenu(),
           body: SingleChildScrollView(
             child: Container(
               margin: EdgeInsets.all(10),

@@ -14,7 +14,8 @@ class ItemData extends ChangeNotifier {
   int sumEgress = 0;
   int sumMonthIncomes = 0;
   int sumMonthPagoTotal = 0;
-  int cicloPago;
+  String frecPago;
+  int horasPorCiclo;
   bool ingresoFijoExist = false;
   String factorPo = 'Valor hora';
   int indexIngFijo = 0;
@@ -41,9 +42,6 @@ class ItemData extends ChangeNotifier {
       item.total = (item.values * item.factor * valorUnitario).toInt();
     });
 
-    // item.value = valueInt;
-    // item.total = (valueInt * factor * valorUnitario).toInt();
-
     updateTotal();
     //Actualizar todos Item de egresos
     egressList.forEach(
@@ -66,18 +64,12 @@ class ItemData extends ChangeNotifier {
       int tipo, double factor, int supTypeItemInt, int value) {
     String factorDescrip = '';
     tipo == 1
-        ? factorDescrip = '''Por  $factor
-Por Valor 
-de la Hora''' // descripcion para ingresos
+        ? factorDescrip = '''Por  $factor\nPor Valor\nde la Hora''' // descripcion para ingresos
         : supTypeItemInt == 1
             ? factorDescrip = '$subTypeItem' // Descrip Egresos Fijos
             : supTypeItemInt == 2
-                ? factorDescrip = '''$factor por
-los Ingresos 
-del ciclo: $sumIncome''' // descripcion Egresos Fraccion de Ingresos del ciclo
-                : factorDescrip = '''$factor por
-Ingresos Mensuales
-exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
+                ? factorDescrip = '''$factor por\nlos Ingresos\ndel ciclo: $sumIncome''' // descripcion Egresos Fraccion de Ingresos del ciclo
+                : factorDescrip = '''$factor por\nIngresos Mensuales\exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
     return factorDescrip;
   }
 
@@ -98,6 +90,8 @@ exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales e
   void updateTotal() {
     sumIncome = 0;
     sumEgress = 0;
+    sumMonthPagoTotal = 0;
+    sumMonthIncomes = 0;
     // Calculo sumatoria ingresos del ciclo
     incomeList.forEach((income) {
       sumIncome += income.total;
@@ -115,6 +109,8 @@ exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales e
     ciclosDataList.forEach((ciclo) {
       sumMonthPagoTotal += ciclo.totalPago;
     });
+    print('sumMonthIncomes: $sumMonthIncomes');
+    print('sumMonthPagoTotal: $sumMonthPagoTotal');
 
     notifyListeners();
   }
@@ -123,11 +119,6 @@ exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales e
     var now = DateTime.now();
     var yearMonthFormater = DateFormat('yMMMM');
     String yearMonth = yearMonthFormater.format(now);
-
-    // List<ItemModel> incomeListCopy = incomeList;
-    // List<ItemModel> egressListCopy = egressList;
-    // String  jsonIncomeList = jsonEncode(incomeList);
-    // String  jsonEgressList = jsonEncode(egressList);
 
     List<Map<String, dynamic>> incomeListMap = [];
     List<Map<String, dynamic>> egressListMap = [];
@@ -140,6 +131,7 @@ exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales e
         dateString: yearMonth,
         totalPago: totalizador,
         sumIncome: sumIncome,
+        sumEgress: sumEgress,
         id: ciclosDataList.length);
 
     //-------------------------
@@ -169,7 +161,7 @@ exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales e
     String yearMonth = yearMonthFormater.format(now);
 
     //se crea un objeto de tipo MonthDataModel y lo alimentamos con valores
-    
+
     List<Map<String, dynamic>> ciclosDataListMap = [];
     ciclosDataList.forEach((element) => ciclosDataListMap.add(element.toMap()));
 
@@ -178,8 +170,8 @@ exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales e
         yearMonth: yearMonth,
         sumIncomesMonth: sumMonthIncomes,
         totalPago: sumMonthPagoTotal,
+        frecPago: frecPago,
         id: monthDataList.length);
-
 
     print('MonthDataList: ');
     monthDataList.forEach((element) {

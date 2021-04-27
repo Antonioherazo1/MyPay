@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class ValorUnitario extends StatefulWidget {
   final String initValue;
@@ -12,6 +13,7 @@ class ValorUnitario extends StatefulWidget {
 
 class _ValorUnitarioState extends State<ValorUnitario> {
   var txtController = TextEditingController();
+  var controller = new MaskedTextController(mask: '000.000.000-00');
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _ValorUnitarioState extends State<ValorUnitario> {
           width: 100.0,
           height: 50.0,
           child: TextField(
+            // controller: controller,
             controller: txtController,
             style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
             keyboardType: TextInputType.number,

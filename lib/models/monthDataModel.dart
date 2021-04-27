@@ -6,19 +6,22 @@ class MonthDataModel {
   String yearMonth;
   int sumIncomesMonth;
   int totalPago;
+  String frecPago= 'ciclo';
 
   MonthDataModel(
       {this.ciclosDataList,
       this.yearMonth,
       this.sumIncomesMonth,
       this.totalPago,
-      this.id});
+      this.id,
+      this.frecPago});
 
   Map toJson() => {
         'ciclosDataList': ciclosDataList,
         'yearMonth': yearMonth,
         'sumIncomesMonth': sumIncomesMonth,
         'totalPago': totalPago,
+        'frecPago': frecPago,
         'id': id
       };
 }
