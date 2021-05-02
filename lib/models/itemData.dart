@@ -64,12 +64,15 @@ class ItemData extends ChangeNotifier {
       int tipo, double factor, int supTypeItemInt, int value) {
     String factorDescrip = '';
     tipo == 1
-        ? factorDescrip = '''Por  $factor\nPor Valor\nde la Hora''' // descripcion para ingresos
+        ? factorDescrip =
+            '''Por  $factor\nPor Valor\nde la Hora''' // descripcion para ingresos
         : supTypeItemInt == 1
             ? factorDescrip = '$subTypeItem' // Descrip Egresos Fijos
             : supTypeItemInt == 2
-                ? factorDescrip = '''$factor por\nlos Ingresos\ndel ciclo: $sumIncome''' // descripcion Egresos Fraccion de Ingresos del ciclo
-                : factorDescrip = '''$factor por\nIngresos Mensuales\exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
+                ? factorDescrip =
+                    '''$factor por\nlos Ingresos\ndel ciclo: $sumIncome''' // descripcion Egresos Fraccion de Ingresos del ciclo
+                : factorDescrip =
+                    '''$factor por\nIngresos Mensuales\exedidos en: $value '''; // descripcion Egresos Fraccion de Ingresos Mensuales exedidos
     return factorDescrip;
   }
 
@@ -109,8 +112,6 @@ class ItemData extends ChangeNotifier {
     ciclosDataList.forEach((ciclo) {
       sumMonthPagoTotal += ciclo.totalPago;
     });
-    print('sumMonthIncomes: $sumMonthIncomes');
-    print('sumMonthPagoTotal: $sumMonthPagoTotal');
 
     notifyListeners();
   }
@@ -173,14 +174,16 @@ class ItemData extends ChangeNotifier {
         frecPago: frecPago,
         id: monthDataList.length);
 
-    print('MonthDataList: ');
-    monthDataList.forEach((element) {
-      String jsonMonthDataList = jsonEncode(element);
-      print('$jsonMonthDataList');
-    });
+    // print('MonthDataList: ');
+    // monthDataList.forEach((element) {
+    //   String jsonMonthDataList = jsonEncode(element);
+    //   print('$jsonMonthDataList');
+    // });
 
     //Añadimos el nuevo Mes a la lista
     monthDataList.add(monthData);
+
+    updateTotal();
 
     ciclosDataList.clear();
   }
