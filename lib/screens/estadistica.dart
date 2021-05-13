@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:mi_pago/widgets/graphicChart.dart';
 import 'package:mi_pago/models/chartItemModel.dart';
 import 'package:mi_pago/models/optionDdownChartModel.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 class Estadistica extends StatefulWidget {
   String charValueChoosen = '';
@@ -236,17 +238,17 @@ class __dropdownGraphicsState extends State<_dropdownGraphics> {
                     month.ciclosDataList.forEach(
                       (cicle) => {
                         chartItem = ChartItem(
-                          id: int.parse(cicle['id'].toString()),
-                          consecutive: n++,
-                          value:
-                              int.parse(cicle['$variableChoosen'].toString()),
-                          yearMonth: month.yearMonth
-                        ),
+                            id: int.parse(cicle['id'].toString()),
+                            consecutive: n++,
+                            value:
+                                int.parse(cicle['$variableChoosen'].toString()),
+                            yearMonth: month.yearMonth),
                         provider.charItemsList.add(chartItem),
                       },
                     )
                   },
                 );
+                provider.updateTotal();
               },
             );
 

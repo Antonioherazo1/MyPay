@@ -36,44 +36,49 @@ class _GraficChartState extends State<GraficChart> {
 
   @override
   Widget build(BuildContext context) {
-    List<ChartItem> list = Provider.of<ItemData>(context).charItemsList;
-    datas = List<double>.generate(list.length, (i) => list[i].value.toDouble());
+    return Consumer<ItemData>(
+      builder: (context, itemData, child) {
+        List<ChartItem> list = itemData.charItemsList;
+        datas =
+            List<double>.generate(list.length, (i) => list[i].value.toDouble());
 
-    Provider.of<ItemData>(context).charItemsList.forEach((e) {
-      return TickSpec(0, label: '01');
-    });
+        itemData.charItemsList.forEach((e) {
+          return TickSpec(0, label: '01');
+        });
 
-    List<Series<double, num>> series = [
-      Series<double, int>(
-          id: 'Sales',
-          colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
-          domainFn: (value, index) => index,
-          measureFn: (value, _) => value,
-          data: datas,
-          strokeWidthPxFn: (_, __) => 4)
-    ];
+        List<Series<double, num>> series = [
+          Series<double, int>(
+              id: 'Sales',
+              colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+              domainFn: (value, index) => index,
+              measureFn: (value, _) => value,
+              data: datas,
+              strokeWidthPxFn: (_, __) => 4)
+        ];
 
-    return LineChart(
-      series,
-      animate: false,
-      selectionModels: [
-        SelectionModelConfig(
-          type: SelectionModelType.info,
-          changedListener: _onSelectionChanged,
-        )
-      ],
-      domainAxis: NumericAxisSpec(
-          tickProviderSpec: StaticNumericTickProviderSpec(list.map(
-        (item) {
-          return TickSpec(item.consecutive,
-              label: '${item.yearMonth}.${item.id}');
-        },
-      ).toList())),
-      primaryMeasureAxis: NumericAxisSpec(
-        tickProviderSpec: BasicNumericTickProviderSpec(
-          desiredTickCount: 4,
-        ),
-      ),
+        return LineChart(
+          series,
+          animate: false,
+          selectionModels: [
+            SelectionModelConfig(
+              type: SelectionModelType.info,
+              changedListener: _onSelectionChanged,
+            )
+          ],
+          domainAxis: NumericAxisSpec(
+              tickProviderSpec: StaticNumericTickProviderSpec(list.map(
+            (item) {
+              return TickSpec(item.consecutive,
+                  label: '${item.yearMonth}.${item.id}');
+            },
+          ).toList())),
+          primaryMeasureAxis: NumericAxisSpec(
+            tickProviderSpec: BasicNumericTickProviderSpec(
+              desiredTickCount: 4,
+            ),
+          ),
+        );
+      },
     );
   }
 }
