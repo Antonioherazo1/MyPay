@@ -14,18 +14,13 @@ class _EgresosState extends State<Egresos> {
       appBar: AppBar(
         title: Text(
           'Egresos',
-          style: TextStyle(
-            fontFamily: 'Dalgona',
-          ),
+          style: TextStyle(),
         ),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            ItemList(income: false), 
-            AddNewItemButtom(tipo: 'EGRESO')
-          ],
+          children: [ItemList(income: false), AddNewItemButtom(tipo: 'EGRESO')],
         ),
       ),
     );

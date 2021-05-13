@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       create: (context) => ItemData(),
       child: MaterialApp(
         home: PantallaInicio(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

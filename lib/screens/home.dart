@@ -41,37 +41,38 @@ class HomeScreem extends StatelessWidget {
                           '${Provider.of<ItemData>(context).valorUnitario}'),
                   DroppDownCiclopago(),
                   Container(
-                    margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 80.0,
-                          width: 350.0,
-                          margin: EdgeInsets.all(5.0),
-                          child: RaisedButton(
-                            padding: EdgeInsets.all(20.0),
-                            color: Colors.green[700],
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            child: Text(
-                              'Ingresos',
-                              style: TextStyle(
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white70),
+                    height: 100.0,
+                    width: 350.0,
+                    margin: EdgeInsets.all(20),
+                    child: RaisedButton(
+                      color: Colors.green[700],
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TapBarPage()));
+                      },
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Icon(
+                              Icons.add,
+                              size: 55.0,
+                              color: Colors.white70,
                             ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => TapBarPage()));
-                            },
                           ),
-                        ),
-                      ],
+                          Text(
+                            'Ingreso Datos',
+                            style: TextStyle(fontSize: 30, color: Colors.white70),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+
                   Container(
                     height: 100.0,
                     width: 350.0,
@@ -97,7 +98,7 @@ class HomeScreem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Balance General',
+                            'Balance Ciclo',
                             style: TextStyle(
                               fontSize: 30,
                               color: Colors.white70,
@@ -132,7 +133,7 @@ class HomeScreem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Estadística',
+                            'Visualizar Datos',
                             style: TextStyle(fontSize: 30, color: Colors.white70),
                           ),
                         ],

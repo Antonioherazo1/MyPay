@@ -14,7 +14,6 @@ class _IngresosState extends State<Ingresos> {
   var txt = TextEditingController();
   var txt2 = TextEditingController();
   int valueUnitar = 0;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +21,14 @@ class _IngresosState extends State<Ingresos> {
       appBar: AppBar(
           title: Text(
             'Ingresos',
-            style: TextStyle(fontFamily: 'Dalgona'),
+            // style: TextStyle(fontFamily: 'Dalgona'),
           ),
           automaticallyImplyLeading: false),
       body: SingleChildScrollView(
-          child: Column(
-            children: [ItemList(income: true), AddNewItemButtom(tipo: 'INGRESO')],
-          ),
+        child: Column(
+          children: [ItemList(income: true), AddNewItemButtom(tipo: 'INGRESO')],
         ),
+      ),
     );
   }
 }

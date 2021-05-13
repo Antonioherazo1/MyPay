@@ -15,7 +15,7 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
       appBar: AppBar(
           title: Text(
             'Balance General',
-            style: TextStyle(fontFamily: 'Dalgona'),
+            // style: TextStyle(fontFamily: 'Dalgona'),
           ),
           automaticallyImplyLeading: false),
       body: SingleChildScrollView(
@@ -138,10 +138,11 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
                     //--- ventana Emergente GUARDAR DATOS MES----
                     showDialog(
                         context: context,
-                        builder: (context) => AlertDialogConfirmation(alertName: 'mes',));
+                        builder: (context) => AlertDialogConfirmation(
+                              alertName: 'mes',
+                            ));
                   }),
             ),
-            
           ],
         ),
       ),
@@ -190,12 +191,12 @@ class AlertDialogConfirmation extends StatelessWidget {
                       : null;
               Navigator.of(context).pop();
             },
-            child: Text('Aceptar', style: TextStyle(fontSize: 25.0))),
+            child: Text('Aceptar', style: TextStyle(fontSize: 25.0),),),
         FlatButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Cancelar', style: TextStyle(fontSize: 25.0)))
+            child: Text('Cancelar', style: TextStyle(fontSize: 25.0),),)
       ],
     );
   }
@@ -236,4 +237,3 @@ class BalanceITEM extends StatelessWidget {
     );
   }
 }
-

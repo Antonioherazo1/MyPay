@@ -5,6 +5,7 @@ import 'package:mi_pago/models/itemModel.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_pago/models/monthDataModel.dart';
 import 'dart:convert';
+import 'package:mi_pago/models/chartItemModel.dart';
 
 class ItemData extends ChangeNotifier {
   int horasLaboralesDiarias = 8;
@@ -13,8 +14,10 @@ class ItemData extends ChangeNotifier {
   int sumIncome = 0;
   int sumEgress = 0;
   int sumMonthIncomes = 0;
+  int sumMonthEgress = 0;
   int sumMonthPagoTotal = 0;
   String frecPago;
+  String charValueChoosen;
   int horasPorCiclo;
   bool ingresoFijoExist = false;
   String factorPo = 'Valor hora';
@@ -25,6 +28,7 @@ class ItemData extends ChangeNotifier {
   List<ItemModel> egressList = [];
   List<CicloDataModel> ciclosDataList = [];
   List<MonthDataModel> monthDataList = [];
+  List<ChartItem> charItemsList = [];
 
   void addIncomeItem(ItemModel newItem) {
     incomeList.add(newItem); // Se añade el nuevo item a Egresos
@@ -95,6 +99,8 @@ class ItemData extends ChangeNotifier {
     sumEgress = 0;
     sumMonthPagoTotal = 0;
     sumMonthIncomes = 0;
+    sumMonthEgress = 0;
+
     // Calculo sumatoria ingresos del ciclo
     incomeList.forEach((income) {
       sumIncome += income.total;
@@ -111,6 +117,11 @@ class ItemData extends ChangeNotifier {
     // cálculo pago total del mes
     ciclosDataList.forEach((ciclo) {
       sumMonthPagoTotal += ciclo.totalPago;
+    });
+
+    // cálculo descuentos totales del mes
+    ciclosDataList.forEach((ciclo) {
+      sumMonthEgress += ciclo.sumEgress;
     });
 
     notifyListeners();
@@ -170,16 +181,10 @@ class ItemData extends ChangeNotifier {
         ciclosDataList: ciclosDataListMap,
         yearMonth: yearMonth,
         sumIncomesMonth: sumMonthIncomes,
+        sumEgressMonth: sumMonthEgress,
         totalPago: sumMonthPagoTotal,
         frecPago: frecPago,
         id: monthDataList.length);
-
-    // print('MonthDataList: ');
-    // monthDataList.forEach((element) {
-    //   String jsonMonthDataList = jsonEncode(element);
-    //   print('$jsonMonthDataList');
-    // });
-
     //Añadimos el nuevo Mes a la lista
     monthDataList.add(monthData);
 
