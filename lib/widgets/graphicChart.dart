@@ -12,6 +12,7 @@ class GraficChart extends StatefulWidget {
 
 class _GraficChartState extends State<GraficChart> {
   var data;
+  var datas;
 
   @override
   void initState() {
@@ -36,6 +37,11 @@ class _GraficChartState extends State<GraficChart> {
   @override
   Widget build(BuildContext context) {
     List<ChartItem> list = Provider.of<ItemData>(context).charItemsList;
+    datas = List<double>.generate(list.length, (i) => list[i].value.toDouble());
+
+    Provider.of<ItemData>(context).charItemsList.forEach((e) {
+      return TickSpec(0, label: '01');
+    });
 
     List<Series<double, num>> series = [
       Series<double, int>(
@@ -43,7 +49,7 @@ class _GraficChartState extends State<GraficChart> {
           colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
           domainFn: (value, index) => index,
           measureFn: (value, _) => value,
-          data: data,
+          data: datas,
           strokeWidthPxFn: (_, __) => 4)
     ];
 
@@ -57,18 +63,12 @@ class _GraficChartState extends State<GraficChart> {
         )
       ],
       domainAxis: NumericAxisSpec(
-        tickProviderSpec: StaticNumericTickProviderSpec(
-          [
-            TickSpec(0, label: '01'),
-            TickSpec(4, label: '05'),
-            TickSpec(9, label: '10'),
-            TickSpec(14, label: '15'),
-            TickSpec(19, label: '20'),
-            TickSpec(24, label: '25'),
-            TickSpec(29, label: '30'),
-          ],
-        ),
-      ),
+          tickProviderSpec: StaticNumericTickProviderSpec(list.map(
+        (item) {
+          return TickSpec(item.consecutive,
+              label: '${item.yearMonth}.${item.id}');
+        },
+      ).toList())),
       primaryMeasureAxis: NumericAxisSpec(
         tickProviderSpec: BasicNumericTickProviderSpec(
           desiredTickCount: 4,

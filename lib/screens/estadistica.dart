@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:mi_pago/models/itemData.dart';
 import 'package:mi_pago/models/monthDataModel.dart';
@@ -179,8 +181,6 @@ class __dropdownGraphicsState extends State<_dropdownGraphics> {
   @override
   Widget build(BuildContext context) {
     ItemData provider = Provider.of<ItemData>(context);
-
-    // List<ChartItem> charItemsList = [];
     List<String> itemDdownChartList = [
       'Total Ingresos',
       'Total Descuentos',
@@ -217,33 +217,40 @@ class __dropdownGraphicsState extends State<_dropdownGraphics> {
             },
           ).toList(),
           onChanged: (newValue) {
+            int n = 0;
             setState(
               () {
                 provider.charValueChoosen = newValue;
-              },
-            );
-            provider.charItemsList.clear();
-            String variableChoosen =
-                provider.charValueChoosen == 'Total Ingresos'
-                    ? 'sumIncome'
-                    : provider.charValueChoosen == 'Total Descuentos'
-                        ? 'sumEgress'
-                        : 'totalPago';
-            print(variableChoosen);
-            ChartItem chartItem;
-            provider.monthDataList.forEach(
-              (month) => {
-                month.ciclosDataList.forEach(
-                  (cicle) => {
-                    chartItem = ChartItem(
-                      id: cicle['id'].toString(),
-                      value: cicle['$variableChoosen'].toString(),
-                    ),
-                    provider.charItemsList.add(chartItem),
+
+                provider.charItemsList.clear();
+                String variableChoosen =
+                    provider.charValueChoosen == 'Total Ingresos'
+                        ? 'sumIncome'
+                        : provider.charValueChoosen == 'Total Descuentos'
+                            ? 'sumEgress'
+                            : 'totalPago';
+                ///////////////
+                ChartItem chartItem;
+                provider.monthDataList.forEach(
+                  (month) => {
+                    month.ciclosDataList.forEach(
+                      (cicle) => {
+                        chartItem = ChartItem(
+                          id: int.parse(cicle['id'].toString()),
+                          consecutive: n++,
+                          value:
+                              int.parse(cicle['$variableChoosen'].toString()),
+                          yearMonth: month.yearMonth
+                        ),
+                        provider.charItemsList.add(chartItem),
+                      },
+                    )
                   },
-                )
+                );
               },
             );
+
+            print(' Lista: ${provider.charItemsList}');
             provider.charItemsList.forEach(
               (element) {
                 print(element.toMap());
@@ -255,64 +262,3 @@ class __dropdownGraphicsState extends State<_dropdownGraphics> {
     ));
   }
 }
-
-// class _dropdownGraphics extends StatefulWidget {
-//   @override
-//   __dropdownGraphicsState createState() => __dropdownGraphicsState();
-// }
-
-// class __dropdownGraphicsState extends State<_dropdownGraphics> {
-//   @override
-//   Widget build(BuildContext context) {
-//     ItemData provider = Provider.of<ItemData>(context);
-//     List<ChartItem> charItemsList;
-
-//     List<OptionDdownChartModel> itemDdownChartList = [
-//       OptionDdownChartModel(value: 'sumIncome', name: 'Total Ingresos'),
-//       OptionDdownChartModel(value: 'totalPago', name: 'Total Descuentos'),
-//       OptionDdownChartModel(value: 'sumEgress', name: 'Pago Total'),
-//     ];
-
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceAround,
-//       children: [
-//         Text(
-//           'Elige Varible',
-//           style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20.0),
-//         ),
-//         DropdownButton(
-//           hint: Text('Elige una Opción'),
-//           value: provider.charValueChoosen,
-//           items: itemDdownChartList.map(
-//             (chartItem) {
-//               return DropdownMenuItem(
-//                 value: '$chartItem', // '${month.id}',
-//                 child: Text(chartItem,
-//                     style:
-//                         TextStyle(fontWeight: FontWeight.w800, fontSize: 20.0)),
-//               );
-//             },
-//           ).toList(),
-//           onChanged: (newValue) {
-//             setState(
-//               () {
-//                 provider.charValueChoosen = newValue;
-// provider.monthDataList.forEach(
-//   (month) => {
-//     month.ciclosDataList.forEach(
-//       (cicle) => {
-//         charItemsList.add(ChartItem(
-//             id: cicle['id'],
-//             value: cicle['${provider.charValueChoosen}'])),
-//       },
-//     )
-//   },
-// );
-//               },
-//             );
-//           },
-//         ),
-//       ],
-//     );
-//   }
-// }
