@@ -44,7 +44,7 @@ class _DroppDownSubTypeItemState extends State<DroppDownSubTypeItem> {
             //---------------------
             onChanged: (newValue) {
               setState(() {
-                Provider.of<ItemData>(context).subTypeItem = newValue;
+                Provider.of<ItemData>(context, listen: false).subTypeItem = newValue;
                 valueChoosen = newValue;
               });
             },

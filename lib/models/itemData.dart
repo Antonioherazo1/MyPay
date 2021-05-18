@@ -150,14 +150,8 @@ class ItemData extends ChangeNotifier {
 
     ciclosDataList.add(cicleData);
 
-    String jsonNewCicle = jsonEncode(cicleData);
-    print(' NewCicleData: \n$jsonNewCicle');
 
-    print('ciclosDataList: ');
-    ciclosDataList.forEach((element) {
-      String jsonCicleDataList = jsonEncode(element);
-      print('$jsonCicleDataList');
-    });
+
 
     //reiniciar valores de items de cantidad variable a cero
     incomeList.forEach((item) {

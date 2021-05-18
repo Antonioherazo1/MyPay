@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mi_pago/screens/archivos.dart';
-import 'package:mi_pago/screens/sideMenu.dart';
 import 'package:mi_pago/widgets/logoNameHeader.dart';
 import 'package:mi_pago/screens/balance.dart';
 import 'package:mi_pago/screens/tapBar.dart';
@@ -9,7 +8,6 @@ import 'package:mi_pago/widgets/valor_unitario.dart';
 import 'package:provider/provider.dart';
 import 'package:mi_pago/models/itemData.dart';
 import 'package:mi_pago/widgets/dropDownCiclopago.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class HomeScreem extends StatelessWidget {
 
@@ -22,7 +20,7 @@ class HomeScreem extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
-          resizeToAvoidBottomPadding: false,
+          resizeToAvoidBottomInset:false,
           appBar: AppBar(
             title: Text(
               'Home',
@@ -44,10 +42,8 @@ class HomeScreem extends StatelessWidget {
                     height: 100.0,
                     width: 350.0,
                     margin: EdgeInsets.all(20),
-                    child: RaisedButton(
-                      color: Colors.green[700],
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
+                    child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.green[700], shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -77,16 +73,14 @@ class HomeScreem extends StatelessWidget {
                     height: 100.0,
                     width: 350.0,
                     margin: EdgeInsets.all(20),
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
+                    child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => BalanceGeneral()));
                       },
-                      color: Colors.blue,
                       child: Row(
                         children: [
                           Padding(
@@ -112,10 +106,8 @@ class HomeScreem extends StatelessWidget {
                     height: 100.0,
                     width: 350.0,
                     margin: EdgeInsets.all(20),
-                    child: RaisedButton(
-                      color: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
+                    child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -144,10 +136,8 @@ class HomeScreem extends StatelessWidget {
                     height: 100.0,
                     width: 350.0,
                     margin: EdgeInsets.all(20.0),
-                    child: RaisedButton(
-                      color: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
+                    child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Archivos()));

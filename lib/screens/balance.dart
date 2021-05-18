@@ -108,13 +108,11 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
               padding: EdgeInsets.only(top: 20.0),
               width: double.infinity,
               height: 60.0,
-              child: RaisedButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
                   child: Text('Guardar valores del Ciclo',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white70, fontSize: 24.0)),
-                  color: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
                   onPressed: () {
                     //--- ventana Emergente GUARDAR CICLO PAGO----
                     showDialog(
@@ -127,13 +125,11 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
               padding: EdgeInsets.only(top: 20.0),
               width: double.infinity,
               height: 60.0,
-              child: RaisedButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.green[400], shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
                   child: Text('Guadar Datos Mes ',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white70, fontSize: 24.0)),
-                  color: Colors.green[400],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
                   onPressed: () {
                     //--- ventana Emergente GUARDAR DATOS MES----
                     showDialog(
@@ -150,6 +146,7 @@ class _BalanceGeneralState extends State<BalanceGeneral> {
   }
 }
 
+// ignore: must_be_immutable
 class AlertDialogConfirmation extends StatelessWidget {
   String alertName;
   Function function;
@@ -181,18 +178,18 @@ class AlertDialogConfirmation extends StatelessWidget {
         style: TextStyle(color: Colors.black54, fontSize: 26.0),
       ),
       actions: [
-        FlatButton(
+        TextButton(
             onPressed: () {
               alertName == 'ciclo de pago'
-                  ? Provider.of<ItemData>(context).saveCiclo()
+                  ? Provider.of<ItemData>(context, listen: false).saveCiclo()
                   : alertName == 'mes'
-                      ? Provider.of<ItemData>(context).saveMes()
+                      ? Provider.of<ItemData>(context, listen: false).saveMes()
                       // ignore: unnecessary_statements
                       : null;
               Navigator.of(context).pop();
             },
             child: Text('Aceptar', style: TextStyle(fontSize: 25.0),),),
-        FlatButton(
+        TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -202,6 +199,7 @@ class AlertDialogConfirmation extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class BalanceITEM extends StatelessWidget {
   String name;
   int value;

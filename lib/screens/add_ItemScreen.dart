@@ -4,8 +4,8 @@ import 'package:mi_pago/models/itemData.dart';
 import 'package:provider/provider.dart';
 import 'package:mi_pago/widgets/droppDownSubTypeItem.dart';
 import 'package:mi_pago/models/itemModel.dart';
-import 'dart:convert';
 
+// ignore: must_be_immutable
 class AddItemScreen extends StatefulWidget {
   String tipo;
   int itemType;
@@ -117,15 +117,15 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
             //-------- FlatButton Añadir --------
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
-              child: FlatButton(
-                color: Colors.lightBlueAccent,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.lightBlueAccent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                 child: Text('Añadir',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold)),
                 onPressed: () {
-                  ItemData providerData = Provider.of<ItemData>(context);
+                  ItemData providerData = Provider.of<ItemData>(context, listen: false);
                   // Se convierte el tipo de Item de String a su equivalente en int
                   widget.itemType = widget.tipo == 'INGRESO' ? 1 : -1;
                   // Se traduce la opción seleccionada de opción tipo String a su valor equivalente en Entero
@@ -178,6 +178,7 @@ class _AddIncomeScreenState extends State<AddItemScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class TFieldNum extends StatelessWidget {
   TFieldNum({this.title, this.widget, this.destinoValue});
   String destinoValue;

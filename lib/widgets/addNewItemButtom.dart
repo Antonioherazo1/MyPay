@@ -8,8 +8,8 @@ class AddNewItemButtom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      color: Colors.lightBlueAccent,
+    return TextButton(      
+      style: TextButton.styleFrom(backgroundColor: Colors.lightBlueAccent),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Text(

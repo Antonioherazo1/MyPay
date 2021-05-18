@@ -40,7 +40,7 @@ class _DroppDownCiclopagoState extends State<DroppDownCiclopago> {
             }).toList(),
             //---------------------
             onChanged: (newValue) {
-              ItemData provider = Provider.of<ItemData>(context);
+              ItemData provider = Provider.of<ItemData>(context, listen: false);
               String descripFactor = 'Horas\n$newValue${'es'}';
               provider.frecPago = newValue;
               setState(() {

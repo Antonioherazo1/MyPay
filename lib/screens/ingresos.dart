@@ -3,6 +3,7 @@ import 'package:mi_pago/widgets/addNewItemButtom.dart';
 import 'package:mi_pago/widgets/itemList.dart';
 import 'package:mi_pago/models/itemModel.dart';
 
+// ignore: must_be_immutable
 class Ingresos extends StatefulWidget {
   List<ItemModel> incomeList;
 

@@ -38,7 +38,7 @@ class _ValorUnitarioState extends State<ValorUnitario> {
             style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
             keyboardType: TextInputType.number,
             onChanged: (value) {
-              Provider.of<ItemData>(context)
+              Provider.of<ItemData>(context, listen: false)
                   .updateValorUnit(int.parse(value));
             },
           ),

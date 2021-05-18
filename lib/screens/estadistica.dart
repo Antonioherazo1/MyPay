@@ -6,10 +6,9 @@ import 'package:mi_pago/models/monthDataModel.dart';
 import 'package:provider/provider.dart';
 import 'package:mi_pago/widgets/graphicChart.dart';
 import 'package:mi_pago/models/chartItemModel.dart';
-import 'package:mi_pago/models/optionDdownChartModel.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 
+// ignore: must_be_immutable
 class Estadistica extends StatefulWidget {
   String charValueChoosen = '';
   @override
